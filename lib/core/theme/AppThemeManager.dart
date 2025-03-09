@@ -5,10 +5,17 @@ abstract class AppThemeManager {
 
   static ThemeData  lighttheme = ThemeData(
     scaffoldBackgroundColor: colorpallete.parimary,
-
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontFamily: "Inter"
+      ), titleMedium: TextStyle(
+        fontFamily: "Inter"
+      ), titleSmall: TextStyle(
+        fontFamily: "Inter"
+      ),
+    ),
+    appBarTheme: AppBarTheme(backgroundColor: colorpallete.parimary)
 
   );
-
-
 
 }

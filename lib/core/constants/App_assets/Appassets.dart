@@ -15,6 +15,9 @@ class Appassets{
   static const String hottrending ="assets/images/hot-trending.png";
   static const String manager ="assets/images/manager-desk.png";
   static const String socialmedia ="assets/images/social-media.png";
+  static const String evently ="assets/images/Evently.png" ;
+  static const String smalllogo ="assets/images/Group 3.png";
+  static const String googlelogo ="assets/images/Group 18559.png";
 
 
 }

@@ -151,7 +151,7 @@ class _onboarding extends State<onboarding> {
                 },
                 icon: Icon(
                   Icons.navigate_next,
-                  color: colorpallete.parimary,
+                  color: colorpallete.darkblue,
                   size: 50,
                 ),
               ),

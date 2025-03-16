@@ -9,7 +9,7 @@ class route_names
       static const String Sign_up = "7sign_up";
       static const String first = "first";
       static const String forgetpass = "forgetpass";
-      static const String welcome = "welcome";
+      static const String welcome = "/welcome_Screen";
       static const String layout = "layout";
 
 

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class welcomescreen extends StatelessWidget {
   const welcomescreen({super.key});
-
+static String routename = "/welcome_Screen";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

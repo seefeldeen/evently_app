@@ -45,6 +45,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   bot_toast: ^4.1.3
   lottie: ^3.2.0
+  flutter_svg: ^2.0.17
 
 
 dev_dependencies:

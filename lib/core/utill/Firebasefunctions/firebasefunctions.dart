@@ -54,6 +54,11 @@ class FirebaseFunctions {
     }
   }
 
+  static Stream<QuerySnapshot<Eventdata>> getstreamdata(){
+    var collectionref = getcollectionreference();
+return collectionref.snapshots();
+  }
+
   static Future<bool> deleteevent(Eventdata deletedevent) async {
     try {
       var collectionref = getcollectionreference();

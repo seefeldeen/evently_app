@@ -15,12 +15,16 @@ final Eventdata eventddatamodel ;
       width: .97.w,
       height: .25.h,
       decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(eventddatamodel.eventimage)),
+          image:
+          DecorationImage(
+            image: AssetImage(eventddatamodel.eventimage),
+            fit: BoxFit.cover,  // Optional: Adjust how the image fits inside the container
+          ),
           borderRadius: BorderRadius.circular(25)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          Container(alignment: Alignment.center,
             width: .1.w,
             height: .065.h,
             decoration: BoxDecoration(
@@ -34,14 +38,8 @@ final Eventdata eventddatamodel ;
                       color: Colors.indigo,
                       fontSize: 18,
                       fontWeight: FontWeight.w700),
-                ),
-                Text(
-                  "Nov",
-                  style: TextStyle(
-                      color: Colors.indigo,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
-                )
+                ).Setoptionalpadding(context, 0, 0, 0, 4),
+
               ],
             ),
           ).Setoptionalpadding(context, 4, 0, 4, 8),

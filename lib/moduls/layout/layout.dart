@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
@@ -162,49 +163,75 @@ class _LayoutState extends State<layout> {
               ),
             ),
           ).Setoptionalpadding(context, 0, 8, 0, 0),
-          FutureBuilder(
-              future: FirebaseFunctions.getdatafromfirestore(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Column(
-                    children: [
-                      Text("somthing went wrong"),
-                      SizedBox(height: 12),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.refresh,
-                            color: Colors.blue,
-                          ))],);
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child: CircularProgressIndicator(
+          StreamBuilder<QuerySnapshot<Eventdata>>(
+            stream: FirebaseFunctions.getstreamdata(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Column(
+                  children: [
+                    Text("Something went wrong"),
+                    SizedBox(height: 12),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.refresh,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
                     color: colorpallete.parimary,
-                  ));
-                }
-                else {
-                  List<Eventdata> SavedEvents = snapshot.data?? [];
-                  return SavedEvents.isNotEmpty?   Expanded(
-                    child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return event_card(
-                            eventddatamodel: SavedEvents[index],
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: .01.h);
-                        },
-                        itemCount: SavedEvents.length),
-                  ) :
-                      Text("there is no event");
+                  ),
+                );
+              } else {
+                List<Eventdata> savedEvents = snapshot.data!.docs.map(
+                      (element) {
+                    return element.data();  // This will use the fromFirestore method
+                  },
+                ).toList();
+
+                return savedEvents.isNotEmpty
+                    ? Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      var event = savedEvents[index];
+                      // Debugging: Print the image path
+                      print("Image Path: ${event.eventimage}");
+
+                      // Use fallback if the image path is empty or invalid
+                      String imagePath = event.eventimage.isNotEmpty
+                          ? event.eventimage
+                          : 'assets/images/Book Club-6.png';  // Fallback image
+
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),  // Use the image path
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: event_card(
+                          eventddatamodel: event,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: .01.h);
+                    },
+                    itemCount: savedEvents.length,
+                  ),
+                )
+                    : Text("There are no events");
+              }
+            },
+          )
 
 
-                }
-              }),
-
-        ],
+        ]
       ),
     );
   }

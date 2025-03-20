@@ -35,15 +35,15 @@ class Eventdata {
 
   factory Eventdata.fromFirestore(Map<String, dynamic> json) {
     return Eventdata(
-      eventID: json["eventId"],  // Assuming 'eventId' is the Firestore field name
-      eventtitle: json["eventTitle"],  // Assuming 'eventTitle' is the Firestore field name
-      description: json["description"],  // Assuming 'description' is the Firestore field name
-      eventcategory: json["eventCategory"],  // Assuming 'eventCategory' is the Firestore field name
-      eventimage: json["eventImage"],  // Assuming 'eventImage' is the Firestore field name
-      eventdate: DateTime.fromMillisecondsSinceEpoch(json["eventDate"]),  // Assuming you need to parse the DateTime
-     isfav: json["isfav"]
-
-      // Assuming you need to convert to TimeOfDay
+      eventID: json["eventId"] ?? "",  // Default to empty string if null
+      eventtitle: json["eventTitle"] ?? "",  // Default to empty string if null
+      description: json["description"] ?? "",  // Default to empty string if null
+      eventcategory: json["eventCategory"] ?? "",  // Default to empty string if null
+      eventimage: json["eventImage"] ??"",  // Default to empty string if null
+      eventdate: json["eventDate"] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json["eventDate"])
+          : DateTime.now(),  // Default to current time if null
+      isfav: json["isfav"] ?? false,  // Default to false if null
     );
   }
 

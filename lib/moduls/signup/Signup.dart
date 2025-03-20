@@ -1,5 +1,7 @@
 import 'package:events/core/extensions/validation.dart';
+import 'package:events/core/utill/Firebasefunctions/firebase_Auth.dart';
 import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
+import 'package:events/moduls/signin/Signin.dart';
 import 'package:flutter/material.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
@@ -102,14 +104,14 @@ class _SignupState extends State<Signup> {
                     if (formkey.currentState!.validate()) {
                       EasyLoading.show(status: 'Creating Account...'); // Show loading indicator
 
-                      firebasefunctions.CreatAaccount(
+                      firebase_auth.CreatAaccount(
                         emailcontroller.text,
                         passcontroller.text,
                       ).then((onValue) {
                         EasyLoading.dismiss(); // Hide loading when response is received
 
                         if (onValue) {
-                          navigatorkey.currentState!.pop(); // Navigate if successful
+                          navigatorkey.currentState!.pushReplacementNamed("layout"); // Navigate if successful
                         } else {
                           EasyLoading.showError("Account creation failed"); // Show error
                         }
@@ -163,7 +165,7 @@ class _SignupState extends State<Signup> {
                               ),
                               onPressed: () {
                                 navigatorkey.currentState!
-                                    .pushNamed(route_names.Sign_up);
+                                    .pushNamed("/sign_in");
                               },
                               child: Text(
                                 " Login",

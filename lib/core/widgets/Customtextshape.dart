@@ -32,6 +32,20 @@ class Customtextshape {
      color: colorpallete.parimary,));
   }
 
+  static Widget Getbigtextchoose(String textdata, BuildContext context,Color textcolor ){
+
+
+   return Text(textdata, style: Theme.of(context)
+       .textTheme
+       .titleMedium
+       ?.copyWith(
+     fontWeight: FontWeight.bold,
+     fontSize: .030.h,
+     decorationThickness: 2,
+     decorationColor: textcolor,
+     color: textcolor,));
+  }
+
 
 
 }

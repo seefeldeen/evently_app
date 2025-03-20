@@ -9,7 +9,7 @@ class Eventtypetab extends StatelessWidget {
   final IconData iconns ;
   final bool isselected;
 
-  const Eventtypetab({super.key,
+   Eventtypetab({super.key,
     required this.text, required this.iconns,
     required this.isselected});
 
@@ -17,7 +17,7 @@ class Eventtypetab extends StatelessWidget {
   Widget build(BuildContext context) {
     return   Container(
 
-    width: .22.w, height: 2.2* Checkbox.width
+    width: .28.w, height: 2.5* Checkbox.width
     ,padding: EdgeInsets.all(6)
       ,decoration: BoxDecoration(
         color: isselected? colorpallete.parimary : colorpallete.darkblue, // You can set a background color if needed
@@ -25,7 +25,7 @@ class Eventtypetab extends StatelessWidget {
         border:
           Border.all(color: colorpallete.parimary,width: 2),
       ),
-      child: Row(
+      child: Row( mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             iconns,

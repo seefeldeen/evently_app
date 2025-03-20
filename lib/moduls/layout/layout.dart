@@ -2,9 +2,13 @@ import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
+import 'package:events/core/models/Eventdata.dart';
+import 'package:events/core/routes/route_names.dart';
+import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
 import 'package:events/core/widgets/Customtextshape.dart';
 import 'package:events/core/widgets/Cutomelevatedbutton.dart';
-import 'package:events/moduls/layout/Widgets/EventTypeTab.dart';
+import 'package:events/core/widgets/EventTypeTab.dart';
+import 'package:events/main.dart';
 import 'package:events/moduls/layout/Widgets/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,7 +31,9 @@ class _LayoutState extends State<layout> {
         shape: CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
         backgroundColor: colorpallete.darkblue,
         child: Icon(Icons.add, color: colorpallete.parimary),
-        onPressed: () {},
+        onPressed: () {
+          navigatorkey.currentState!.pushNamed(route_names.eventcreation);
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30,
@@ -127,46 +133,78 @@ class _LayoutState extends State<layout> {
                   SizedBox(
                     height: .008.h,
                   ),
-                  Expanded(
-                      child: TabBar(
-                          tabAlignment: TabAlignment.start,
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          indicatorColor: Colors.transparent,
-                          dividerColor: Colors.transparent,
-                          isScrollable: true,
-                          tabs: [
-                        Eventtypetab(
-                            text: "Sport",
-                            iconns: Icons.bike_scooter,
-                            isselected: true),
-                        Eventtypetab(
-                            text: "Sport",
-                            iconns: Icons.bike_scooter,
-                            isselected: false),
-                        Eventtypetab(
-                            text: "Sport",
-                            iconns: Icons.bike_scooter,
-                            isselected: false),
-                        Eventtypetab(
-                            text: "Sport",
-                            iconns: Icons.bike_scooter,
-                            isselected: false),
-                      ]))
+                  // Expanded(
+                  //     child: TabBar(
+                  //         tabAlignment: TabAlignment.start,
+                  //         padding: EdgeInsets.symmetric(horizontal: 8),
+                  //         indicatorColor: Colors.transparent,
+                  //         dividerColor: Colors.transparent,
+                  //         isScrollable: true,
+                  //         tabs: [
+                  //       Eventtypetab(
+                  //           text: "Spoot",
+                  //           iconns: Icons.bike_scooter,
+                  //           isselected: true),
+                  //       Eventtypetab(
+                  //           text: "Sport",
+                  //           iconns: Icons.bike_scooter,
+                  //           isselected: false),
+                  //       Eventtypetab(
+                  //           text: "Sport",
+                  //           iconns: Icons.bike_scooter,
+                  //           isselected: false),
+                  //       Eventtypetab(
+                  //           text: "Sport",
+                  //           iconns: Icons.bike_scooter,
+                  //           isselected: false),
+                  //     ]))
                 ],
               ),
             ),
           ).Setoptionalpadding(context, 0, 8, 0, 0),
-    Expanded(
-      child: ListView.separated(itemBuilder: (context , index){
+          FutureBuilder(
+              future: FirebaseFunctions.getdatafromfirestore(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Column(
+                    children: [
+                      Text("somthing went wrong"),
+                      SizedBox(height: 12),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.refresh,
+                            color: Colors.blue,
+                          ))],);
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: colorpallete.parimary,
+                  ));
+                }
+                else {
+                  List<Eventdata> SavedEvents = snapshot.data?? [];
+                  return SavedEvents.isNotEmpty?   Expanded(
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return event_card(
+                            eventddatamodel: SavedEvents[index],
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: .01.h);
+                        },
+                        itemCount: SavedEvents.length),
+                  ) :
+                      Text("there is no event");
 
-        return const event_card();
-      },
-      separatorBuilder: (context , index){
-      
-        return SizedBox(height: .02.h);
-      },
-      itemCount: 20),
-    )      ],
+
+                }
+              }),
+
+        ],
       ),
     );
   }

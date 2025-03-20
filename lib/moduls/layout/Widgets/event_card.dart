@@ -2,18 +2,20 @@ import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
+import 'package:events/core/models/Eventdata.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class event_card extends StatelessWidget {
-  const event_card({super.key});
-
+  const event_card({super.key, required this.eventddatamodel});
+final Eventdata eventddatamodel ;
   @override
   Widget build(BuildContext context) {
     return  Container(padding: EdgeInsets.all(8),
       width: .97.w,
       height: .25.h,
       decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(Appassets.eating)),
+          image: DecorationImage(image: AssetImage(eventddatamodel.eventimage)),
           borderRadius: BorderRadius.circular(25)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,7 @@ class event_card extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "25",
+                  DateFormat("dd MMM").format( eventddatamodel.eventdate),
                   style: TextStyle(
                       color: Colors.indigo,
                       fontSize: 18,
@@ -42,7 +44,7 @@ class event_card extends StatelessWidget {
                 )
               ],
             ),
-          ).Setoptionalpadding(context, 4, 0, 4, 4),
+          ).Setoptionalpadding(context, 4, 0, 4, 8),
           Container(
               padding: EdgeInsets.all(12),
               width: .93.w, height: .06.h,
@@ -54,7 +56,7 @@ class event_card extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        " 25 this is birth day party ",
+                        eventddatamodel.eventtitle,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 22,
@@ -63,7 +65,7 @@ class event_card extends StatelessWidget {
                     ),
                     Icon(Icons.favorite_border_outlined)
                   ])
-          ).Setoptionalpadding(context, .092.h, .01.h, 0, 0)
+          ).Setoptionalpadding(context, .092.h, .01.h, 4, 4)
 
         ],
       ),

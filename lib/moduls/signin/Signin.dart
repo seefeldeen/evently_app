@@ -1,5 +1,6 @@
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
+import 'package:events/core/utill/Firebasefunctions/firebase_Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:events/core/routes/route_names.dart';
@@ -9,14 +10,14 @@ import 'package:events/core/extensions/validation.dart';
 import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
 import 'package:events/main.dart';
 
-class Firstscreen extends StatefulWidget {
-  const Firstscreen({super.key});
+class Signin extends StatefulWidget {
+  const Signin({super.key});
 
   @override
-  State<Firstscreen> createState() => _FirstscreenState();
+  State<Signin> createState() => _SigninState();
 }
 
-class _FirstscreenState extends State<Firstscreen> {
+class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     final _emailController = TextEditingController();
@@ -107,7 +108,7 @@ class _FirstscreenState extends State<Firstscreen> {
                         if (formKey.currentState!.validate()) {
                           EasyLoading.show(status: "Logging in...");
 
-                          firebasefunctions.Login(
+                          firebase_auth.Login(
                             _emailController.text,
                             _passController.text,
                           ).then((onValue) {

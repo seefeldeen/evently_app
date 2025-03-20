@@ -108,7 +108,7 @@ class _onboarding extends State<onboarding> {
               IconButton(
                 onPressed: () {
                   if (_pageController.page == 0) {
-                    Navigator.pushReplacementNamed(context, 'first_screen');
+                    Navigator.pushReplacementNamed(context, '/sign_in');
                   } else {
                     _pageController.previousPage(
                       duration: const Duration(milliseconds: 300),
@@ -141,7 +141,7 @@ class _onboarding extends State<onboarding> {
               IconButton(
                 onPressed: () {
                   if (_pageController.page == welcomePhotos.length - 1) {
-                    Navigator.pushReplacementNamed(context, route_names.first);
+                    Navigator.pushReplacementNamed(context, route_names.Sign_in);
                   } else {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 300),

@@ -1,0 +1,100 @@
+{
+  "theme": "Theme",
+  "lang": "Language",
+  "lStart": "Let's Start",
+  "startTitle": "Personalize Your Experience",
+  "startDesc": "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
+
+  "boarding1Title": "Find Events That Inspire You",
+  "boarding1Desc": "Dive into a world of events crafted to fit your unique interests. Whether you're into live music, art workshops, professional networking, or simply discovering new experiences, we have something for everyone. Our curated recommendations will help you explore, connect, and make the most of every opportunity around you.",
+
+  "boarding2Title": "Effortless Event Planning",
+  "boarding2Desc": "Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.",
+
+  "boarding3Title": "Connect with Friends & Share Moments",
+  "boarding3Desc": "Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.",
+
+  "email": "Email",
+  "emailCantBeEmpty": "Email can't be empty",
+
+  "password": "Password",
+  "pleaseEnterAPassword": "Please enter a password",
+  "forgotPassword": "Forgot Password?",
+  "passwordMustBeAtLeast6Characters": "Password must be at least 6 characters",
+
+  "logout": "Log out",
+
+  "login": "Log in",
+  "loggingIn": "Logging in...",
+  "loginFailedPleaseTryAgain": "Login failed. Please try again.",
+  "anErrorOccurredTryAgain": "An error occurred. Try again.",
+
+  "dontHaveAnAccount": "Don't have an account?",
+  "pleaseEnterAValidEmail": "Please enter a valid email",
+
+  "createAccount": "Create Account",
+
+  "or": "OR",
+
+  "logInWithGoogle": "Log in with Google",
+
+  "register": "Register",
+
+  "nameCantBeEmpty": "Name can't be empty",
+  "name": "Name",
+
+  "emailCantBeEmpty": "Email can't be empty",
+  "plzEnterAValidEmail": "plz enter a Valid Email",
+
+  "plzEnterAValidPassword": "plz enter a Valid password",
+
+  "passwordNotMatch": "password not match",
+  "rePassword": "Re Password",
+  "creatingAccount": "Creating Account...",
+
+  "accountCreationFailed": "Account creation failed",
+  "anErrorOccurred": "An error occurred",
+
+  "createAccount": "Create Account",
+
+  "alreadyHaveAccount": "Already Have Account?",
+
+  "home": "Home",
+  "map": "Map",
+  "liked": "Liked",
+  "profile": "Profile",
+
+  "somethingWentWrong": "Something went wrong",
+  "thereAreNoEvents": "There are no events",
+  "welcomeBack": "Welcome back",
+  "bookclub": "bookclub",
+  "sport": "sport",
+  "birthday": "birthday",
+  "meeting": "meeting",
+  "holiday": "holiday",
+  "eating": "eating",
+  "gaming": "gaming",
+  "workshop": "workshop",
+  "exhibition": "exhibition",
+
+  "somethingWentWrong": "Something went wrong",
+  "thereAreNoEventsCreatedYet": "There are no events created yet",
+"favouriteevents" : "Favourite events",
+  "createEvent": "Create event",
+  "title": "Title",
+  "description": "Description",
+  "wantSomethingToReminderYou": "want something to reminder you!?",
+  "eventDate": "Event date",
+    "eventTime": "Event time",
+  "chooseDate": "choose date",
+  "choosetime": "choose time",
+  "chooseEventLocation": "choose event location",
+  "eventWasCreatedSuccessfully": "Event was created successfully",
+  "failedToCreateEvent": "Failed to create event.",
+  "pleaseChooseADate": "Please choose a date.",
+  "saveEvent": "Save Event",
+  "loading": "Loading...",
+
+  "forgetPassword": "Forget password",
+  "resetPassword": "Reset Password"
+}

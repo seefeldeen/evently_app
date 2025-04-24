@@ -1,29 +1,79 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
+import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/route_names.dart';
-import 'package:events/moduls/onboardingscreens/welcomescreen.dart';
+import 'package:events/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class Splash_screen extends StatefulWidget {
-  const Splash_screen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<Splash_screen> createState() => _Splash_screenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _Splash_screenState extends State<Splash_screen> {
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+
+    Future.delayed(const Duration(seconds: 2), () async {
+      final provider = Provider.of<app_provider>(context, listen: false);
+      final isFirstTime = await provider.Firsttimegetter();
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      if (isFirstTime) {
+        navigatorkey.currentState!.pushReplacementNamed(route_names.welcome);
+      } else {
+        if (currentUser == null) {
+          navigatorkey.currentState!
+              .pushReplacementNamed(route_names.Sign_in);
+        } else {
+          navigatorkey.currentState!.pushReplacementNamed(route_names.layout);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedSplashScreen(
-        backgroundColor: Colors.white,
-        splashIconSize: 500, // Adjust the splash icon size if needed
-        animationDuration: Duration(seconds: 3), // Adjust the duration to match the time you want for the splash screen
-        splash: Image.asset(Appassets.logoo), // Splash image
-        curve: Curves.fastOutSlowIn, // Animation curve
-        nextScreen: welcomescreen(), // The next screen after splash
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Center(
+        child: Column(
+          children: [
+            const Spacer(),
+            // Logo animation
+            BounceInDown(
+              duration: const Duration(milliseconds: 1200),
+              child: Hero(
+                tag: "logo",
+                child: Image.asset(
+                  Appassets.logoo,
+                  height: 180,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // App name animation
+
+            const Spacer(),
+
+            // This part is hidden but used to delay screen transition
+            FadeInUp(
+              delay: const Duration(seconds: 2),
+              child: const SizedBox(),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+

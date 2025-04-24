@@ -3,6 +3,8 @@ import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
+import 'package:events/core/manager/app_provider.dart';
+import 'package:events/core/models/Eventcategory.dart';
 import 'package:events/core/models/Eventdata.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
@@ -11,234 +13,82 @@ import 'package:events/core/widgets/Cutomelevatedbutton.dart';
 import 'package:events/core/widgets/EventTypeTab.dart';
 import 'package:events/main.dart';
 import 'package:events/moduls/layout/Widgets/event_card.dart';
+import 'package:events/moduls/layout/Widgets/hometapbar.dart';
+import 'package:events/moduls/layout/favourite/fav_tap.dart';
+import 'package:events/moduls/layout/home/home_tap.dart';
+import 'package:events/moduls/layout/layoutprovider.dart';
+import 'package:events/moduls/layout/location/map_tap.dart';
+import 'package:events/moduls/layout/profile/profile_tap.dart';
+import 'package:events/moduls/layout/profile/profile_tap.dart';
+import 'package:events/moduls/onboardingscreens/welcomescreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class layout extends StatefulWidget {
-  const layout({super.key});
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:events/core/manager/app_provider.dart';  // تأكد من استيراد الـ app_provider
 
-  @override
-  State<layout> createState() => _LayoutState();
-}
+class layout extends StatelessWidget {
+  layout({super.key});
 
-class _LayoutState extends State<layout> {
-  int selectedindex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
-        backgroundColor: colorpallete.darkblue,
-        child: Icon(Icons.add, color: colorpallete.parimary),
-        onPressed: () {
-          navigatorkey.currentState!.pushNamed(route_names.eventcreation);
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 30,
-        backgroundColor: colorpallete.darkblue,
-        selectedItemColor: colorpallete.parimary,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: selectedindex,
-        unselectedItemColor: colorpallete.parimary,
-        onTap: _Btnnavigatorindex, // ✅ Calls the fixed function
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
-            activeIcon: Icon(Icons.home_filled),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on_outlined),
-            label: "Map",
-            activeIcon: Icon(Icons.location_on),
-          ),
-          BottomNavigationBarItem(
-            icon: SizedBox.shrink(), // Empty space for FAB
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border_outlined),
-            label: "Liked",
-            activeIcon: Icon(Icons.favorite),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "You",
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            height: .25.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: colorpallete.darkblue,
-                borderRadius: BorderRadiusDirectional.only(
-                    bottomEnd: Radius.circular(40),
-                    bottomStart: Radius.circular(40))),
-            padding: EdgeInsets.all(10),
-            child: DefaultTabController(
-              length: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: .025.h,
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          Customtextshape.Getsmalltext("Welcome back", context),
-                          Customtextshape.Getbigtext("User", context)
-                              .Setoptionalpadding(
-                            context,
-                            4,
-                            0,
-                            0,
-                            0,
-                            enablemediaquery: true,
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      SvgPicture.asset("assets/icons/Vector.svg")
-                          .Setoptionalpadding(context, 0, 0, 8, 0),
-                      Cutomelevatedbutton(
-                        onPressed: () {},
-                        text: 'ENG',
-                        buttoncolor: colorpallete.parimary,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: .01.h,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: colorpallete.parimary,
-                      ),
-                      Text(
-                        "cairo , egypt",
-                        style: TextStyle(
-                            color: colorpallete.parimary, fontSize: .017.h),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: .008.h,
-                  ),
-                  // Expanded(
-                  //     child: TabBar(
-                  //         tabAlignment: TabAlignment.start,
-                  //         padding: EdgeInsets.symmetric(horizontal: 8),
-                  //         indicatorColor: Colors.transparent,
-                  //         dividerColor: Colors.transparent,
-                  //         isScrollable: true,
-                  //         tabs: [
-                  //       Eventtypetab(
-                  //           text: "Spoot",
-                  //           iconns: Icons.bike_scooter,
-                  //           isselected: true),
-                  //       Eventtypetab(
-                  //           text: "Sport",
-                  //           iconns: Icons.bike_scooter,
-                  //           isselected: false),
-                  //       Eventtypetab(
-                  //           text: "Sport",
-                  //           iconns: Icons.bike_scooter,
-                  //           isselected: false),
-                  //       Eventtypetab(
-                  //           text: "Sport",
-                  //           iconns: Icons.bike_scooter,
-                  //           isselected: false),
-                  //     ]))
-                ],
-              ),
+
+    final appprovider = Provider.of<app_provider>(context);  // احصل على الـ provider
+    var theme = Theme.of(context);  // احصل على الثيم الحالي
+
+    return ChangeNotifierProvider(
+        create: (context) => LayoutProvider()..fetchAllEvents(),
+        child: Consumer<LayoutProvider>(
+        builder: (context, provider, child) {
+      return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add, color: colorpallete.parimary),
+          onPressed: () {
+            navigatorkey.currentState!.pushNamed(route_names.eventcreation);
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: provider.selectedIndex,
+          onTap: provider.changeBottomNav,
+          backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,  // تحديث اللون بناءً على الثيم
+          selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor,  // تحديث اللون بناءً على الثيم
+          unselectedItemColor: theme.bottomNavigationBarTheme.unselectedItemColor,  // تحديث اللون بناءً على الثيم
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: context.tr.home,
             ),
-          ).Setoptionalpadding(context, 0, 8, 0, 0),
-          StreamBuilder<QuerySnapshot<Eventdata>>(
-            stream: FirebaseFunctions.getstreamdata(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Column(
-                  children: [
-                    Text("Something went wrong"),
-                    SizedBox(height: 12),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.refresh,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: colorpallete.parimary,
-                  ),
-                );
-              } else {
-                List<Eventdata> savedEvents = snapshot.data!.docs.map(
-                      (element) {
-                    return element.data();  // This will use the fromFirestore method
-                  },
-                ).toList();
-
-                return savedEvents.isNotEmpty
-                    ? Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      var event = savedEvents[index];
-                      // Debugging: Print the image path
-                      print("Image Path: ${event.eventimage}");
-
-                      // Use fallback if the image path is empty or invalid
-                      String imagePath = event.eventimage.isNotEmpty
-                          ? event.eventimage
-                          : 'assets/images/Book Club-6.png';  // Fallback image
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(imagePath),  // Use the image path
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: event_card(
-                          eventddatamodel: event,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: .01.h);
-                    },
-                    itemCount: savedEvents.length,
-                  ),
-                )
-                    : Text("There are no events");
-              }
-            },
-          )
-
-
-        ]
-      ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.location_on_outlined),
+              activeIcon: Icon(Icons.location_on),
+              label: context.tr.map,
+            ),
+            BottomNavigationBarItem(
+              icon: SizedBox.shrink(),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border_outlined),
+              activeIcon: Icon(Icons.favorite),
+              label: context.tr.liked,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              label: context.tr.profile,
+            ),
+          ],
+        ),
+        body: provider.bottombarwidget[provider.selectedIndex],
+      );
+        }
+    )
     );
-  }
-
-  void _Btnnavigatorindex(int index) {
-    setState(() {
-      selectedindex = index; // ✅ Update selectedindex properly
-    });
   }
 }

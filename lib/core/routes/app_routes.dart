@@ -18,7 +18,7 @@ abstract class AppRoutes{
     switch (settings.name){
       case route_names.initial:
 
-       return MaterialPageRoute(builder: (context)=> const Splash_screen(),
+       return MaterialPageRoute(builder: (context)=> const SplashScreen(),
          settings:  settings
 
     );
@@ -69,7 +69,7 @@ abstract class AppRoutes{
 
        default  :
 
-        return MaterialPageRoute(builder: (context)=> Splash_screen(),
+        return MaterialPageRoute(builder: (context)=> SplashScreen(),
             settings:  settings
 
         );

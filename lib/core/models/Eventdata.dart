@@ -1,57 +1,83 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+class EventModel {
+  String? userId;
+  String? id;
+  String categoryId;
+  String categoryImage;
+  String title;
+  String desc;
+  String eventDate;
 
-import 'package:flutter/material.dart';
+  // @override
+  // bool operator ==(Object other) =>
+  //     identical(this, other) ||
+  //         other is EventModel &&
+  //             runtimeType == other.runtimeType &&
+  //             userId == other.userId &&
+  //             id == other.id &&
+  //             categoryId == other.categoryId &&
+  //             categoryImage == other.categoryImage &&
+  //             title == other.title &&
+  //             desc == other.desc &&
+  //             eventDate == other.eventDate &&
+  //             eventTime == other.eventTime &&
+  //             isFav == other.isFav;
+  //
+  // @override
+  // int get hashCode =>
+  //     userId.hashCode ^
+  //     id.hashCode ^
+  //     categoryId.hashCode ^
+  //     categoryImage.hashCode ^
+  //     title.hashCode ^
+  //     desc.hashCode ^
+  //     eventDate.hashCode ^
+  //     eventTime.hashCode ^
+  //     isFav.hashCode;
 
-class Eventdata {
-  static const String collectionName="eventNamecollection";
-   String? eventID;
-  final String eventtitle;
-  final String description;
-  final DateTime eventdate;
-  final String eventimage;
-  final String eventcategory;
-  bool isfav;
+  String eventTime;
+  bool isFav
+  ;
 
-  Eventdata(
-      {this.eventID ="",
-     required this.eventtitle,
-        required this.description,
-        required this.eventdate,
-        required this.eventimage,
-        required this.eventcategory,
-      this.isfav = false}); // function to send this event details to firebase and another one to get events
+  EventModel(
+      {this.userId,
+        this.id,
+        required this.title,
+        required this.desc,
+        required this.eventDate,
+        required this.eventTime,
+        required this.categoryId,
+        this.isFav = false,
+        required this.categoryImage});
 
-   Map<String, dynamic> tofirestore() {
+  EventModel.formJson(Map<String, dynamic> json)
+      : this(
+    userId: json["userId"],
+    id: json["id"],
+    title: json["title"],
+    desc: json["desc"],
+    eventDate: json["eventDate"],
+    eventTime: json["eventTime"],
+    categoryId: json["categoryId"],
+    categoryImage: json["categoryImage"],
+    isFav: json["isFav"] ?? false,
+  );
+
+  Map<String, dynamic> toJson() {
     return {
-      "eventId": eventID,
-      "eventTitle": eventtitle,
-      "eventImage ": eventimage,
-      "description": description,
-      "eventCategory": eventcategory,
-      "eventDate" : eventdate.millisecondsSinceEpoch,
-      "isfav": isfav
+      "userId": userId,
+      "id": id,
+      "categoryId": categoryId,
+      "categoryImage": categoryImage,
+      "title": title,
+      "desc": desc,
+      "eventDate": eventDate,
+      "eventTime": eventTime,
+      "isFav": isFav,
     };
   }
-
-  factory Eventdata.fromFirestore(Map<String, dynamic> json) {
-    return Eventdata(
-      eventID: json["eventId"] ?? "",  // Default to empty string if null
-      eventtitle: json["eventTitle"] ?? "",  // Default to empty string if null
-      description: json["description"] ?? "",  // Default to empty string if null
-      eventcategory: json["eventCategory"] ?? "",  // Default to empty string if null
-      eventimage: json["eventImage"] ??"",  // Default to empty string if null
-      eventdate: json["eventDate"] != null
-          ? DateTime.fromMillisecondsSinceEpoch(json["eventDate"])
-          : DateTime.now(),  // Default to current time if null
-      isfav: json["isfav"] ?? false,  // Default to false if null
-    );
-  }
-
-
-
-
-  }
-
+}
 
 
 

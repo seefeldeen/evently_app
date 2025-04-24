@@ -1,42 +1,52 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
+import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/route_names.dart';
+import 'package:events/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 
 class onboarding extends StatefulWidget {
   static const String routeName = "/on_boarding_view";
 
-
   onboarding({super.key});
 
   @override
-  State<onboarding> createState() => _onboarding();
+  State<onboarding> createState() => _OnboardingState();
 }
 
-class _onboarding extends State<onboarding> {
+class _OnboardingState extends State<onboarding> {
   final List<String> welcomePhotos = [
     Appassets.hottrending,
     Appassets.manager,
     Appassets.socialmedia,
   ];
 
-  final List<String> welcomeQuotes = [
-    "Find Events That Inspire You",
-    "Effortless Event Planning",
-    "Connect with Friends & Share Moments",
-
-  ];
-  final List<String> welcomedescribtion = [
-    "Dive into a world of events crafted to fit your unique interests. Whether you're into live music, art workshops, professional networking, or simply discovering new experiences, we have something for everyone. Our curated recommendations will help you explore, connect, and make the most of every opportunity around you.",
-    "Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.",
-    "Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.",
-
-  ];
-
   final PageController _pageController = PageController();
+
+  // These lists should be initialized once, not inside the build method
+  late List<String> welcomeQuotes;
+  late List<String> welcomeDescriptions;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize these once the context is available
+    welcomeQuotes = [
+      context.tr.boarding1Title,
+      context.tr.boarding2Title,
+      context.tr.boarding3Title,
+    ];
+
+    welcomeDescriptions = [
+      context.tr.boarding1Desc,
+      context.tr.boarding2Desc,
+      context.tr.boarding3Desc,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,59 +56,69 @@ class _onboarding extends State<onboarding> {
         children: [
           SizedBox(height: 40),
           Center(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(Appassets.smalllogo),
                 SizedBox(width: 20),
-                Image.asset(Appassets.evently,),
+                Image.asset(Appassets.evently),
               ],
             ),
-          )
-          ,Expanded(
+          ),
+          Expanded(
             child: PageView.builder(
               controller: _pageController,
               itemCount: welcomePhotos.length,
               itemBuilder: (context, index) {
+                return ChangeNotifierProvider(
+                create: (context) => app_provider(),
+                builder: (context, child) {
+                var provider = Provider.of<app_provider>(context);
                 return Column(
-                  children: [
-                    Padding(
-                      padding:  EdgeInsets.all(18.0),
-                      child:  SizedBox( height: 400
-                        ,child: Image.asset(
-                          welcomePhotos[index],
-                          fit: BoxFit.fitWidth,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                    textDirection: provider.lang == "ar"
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(18.0),
+                        child: SizedBox(
+                          height: 400,
+                          child: Image.asset(
+                            welcomePhotos[index],
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      welcomeQuotes[index],
-                     style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                decorationThickness: 2,
-                decorationColor: colorpallete.darkblue,
-                color: colorpallete.darkblue,)
-                ).Sethorizontalpadding(context, .02),
-
-
-                    Text( welcomedescribtion[index] ,style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      decorationThickness: 2,
-                      decorationColor: colorpallete.darkblue,
-                      color: Colors.black,)
-                    ).Setoptionalpadding(context, 6, .12, .12, 12),
-
-                  ],
-                );
+                      FadeInRightBig(
+                        child: Text(
+                          welcomeQuotes[index],
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            decorationThickness: 2,
+                            decorationColor: colorpallete.darkblue,
+                            color: colorpallete.darkblue,
+                          ),
+                        ).Sethorizontalpadding(context, .02),
+                      ),
+                      FadeInLeftBig(
+                        child: Text(
+                          welcomeDescriptions[index],
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            decorationThickness: 2,
+                            decorationColor: colorpallete.darkblue,
+                          ),
+                        ).Setoptionalpadding(context, 6, .12, .12, 12),
+                      ),
+                    ],
+                  );
+                })
+                ;
               },
-            ),
+            ).Sethorizontalpadding(context, .05),
           ),
           SizedBox(height: 14),
           Row(
@@ -123,7 +143,6 @@ class _onboarding extends State<onboarding> {
                 ),
               ),
               SizedBox(width: 16),
-
               // Smooth Indicator
               SmoothPageIndicator(
                 controller: _pageController,
@@ -136,7 +155,6 @@ class _onboarding extends State<onboarding> {
                 ),
               ),
               SizedBox(width: 16),
-
               // Next Button
               IconButton(
                 onPressed: () {

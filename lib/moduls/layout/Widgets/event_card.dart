@@ -1,72 +1,116 @@
 import 'package:events/core/ColorPallete/colorpallete.dart';
-import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
 import 'package:events/core/models/Eventdata.dart';
+import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
+import 'package:events/moduls/layout/layoutprovider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class event_card extends StatelessWidget {
-  const event_card({super.key, required this.eventddatamodel});
-final Eventdata eventddatamodel ;
+class EventCard extends StatelessWidget {
+  const EventCard({super.key, required this.eventddatamodel});
+  final EventModel eventddatamodel;
+  // final String eventDate;
   @override
   Widget build(BuildContext context) {
-    return  Container(padding: EdgeInsets.all(8),
-      width: .97.w,
-      height: .25.h,
-      decoration: BoxDecoration(
-          image:
-          DecorationImage(
-            image: AssetImage(eventddatamodel.eventimage),
-            fit: BoxFit.cover,  // Optional: Adjust how the image fits inside the container
-          ),
-          borderRadius: BorderRadius.circular(25)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(alignment: Alignment.center,
-            width: .1.w,
-            height: .065.h,
-            decoration: BoxDecoration(
-                color: colorpallete.parimary,
-                borderRadius: BorderRadius.circular(8)),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  DateFormat("dd MMM").format( eventddatamodel.eventdate),
-                  style: TextStyle(
-                      color: Colors.indigo,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
-                ).Setoptionalpadding(context, 0, 0, 0, 4),
+    //
+      var eventprovider = Provider.of<LayoutProvider>(context);
 
-              ],
-            ),
-          ).Setoptionalpadding(context, 4, 0, 4, 8),
-          Container(
-              padding: EdgeInsets.all(12),
-              width: .93.w, height: .06.h,
+    DateTime eventDate = DateTime.parse(eventddatamodel.eventDate);
+
+    // تنسيق التاريخ باستخدام DateFormat (اختياري، حسب الشكل اللي حابب تعرضه)
+    String formattedDate = DateFormat('dd MMM yyyy').format(eventDate); // مثلا "30 Apr 2025"
+
+    // عرض الوقت بشكل مباشر (هكذا نعرضه كما هو من الموديل)
+    String formattedTime = eventddatamodel.eventTime; // مثلا "6:37 AM"
+    return  // Apply border radius to ClipRRect to ensure clipping
+       Container(
+        padding: EdgeInsets.all(8),
+        width: .85.w,
+        height: .25.h,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: colorpallete.darkblue,  // Border color
+            width: 2.0,          // Border width
+          ),
+          image: DecorationImage(
+            image: AssetImage(eventddatamodel.categoryImage),
+            fit: BoxFit.contain, // Adjust how the image fits inside the container
+          ),
+          borderRadius: BorderRadius.circular(18), // Apply the same border radius to the container
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              width: .25.w,
+              height: .06.h,
               decoration: BoxDecoration(
-                  color: colorpallete.parimary,
-                  borderRadius: BorderRadius.circular(14)),
-              child:
-              Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        eventddatamodel.eventtitle,
+                color: colorpallete.parimary,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(formattedTime,
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700),
+                          color: Colors.indigo,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ).Setoptionalpadding(context, 2, 0, 0, 4),
+                  Text(
+                    formattedDate,
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ).Setoptionalpadding(context, 2, 0, 0, 4),
+                    ],
+                  ),
+                ],
+              ),
+            ).Setoptionalpadding(context, 4, 0, 4, 8),
+            Container(
+              padding: EdgeInsets.all(12),
+              width: .9.w,
+              height: .06.h,
+              decoration: BoxDecoration(
+                color: colorpallete.parimary,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      eventddatamodel.title,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Icon(Icons.favorite_border_outlined)
-                  ])
-          ).Setoptionalpadding(context, .092.h, .01.h, 4, 4)
-
-        ],
-      ),
-    );
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      eventprovider.setfavourit(eventddatamodel);
+                    },
+                    child: eventddatamodel.isFav
+                        ? Icon(Icons.favorite)
+                        : Icon(Icons.favorite_border_outlined),
+                  ),
+                ],
+              ),
+            ).Setoptionalpadding(context, .092.h, .01.h, 0, 0),
+          ],
+        ),
+      ).Sethorizontalpadding(context, .002);
   }
 }

@@ -1,65 +1,90 @@
-import 'package:events/core/services/snackbarservice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events/core/routes/route_names.dart';
+import 'package:events/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/src/widgets/navigator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:events/core/services/snackbarservice.dart';
 
-class firebase_auth{
+class firebase_auth {
 
-
-
-  static Future<bool> CreatAaccount(
-      String emailAddress, String password) async {
+  static Future<UserCredential?> CreatAaccountfirebase(
+      String emailAddress,
+      String password,
+      String name) async {
     EasyLoading.show();
     try {
-      final credential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-      snackbar.showCustomNotification(message: 'Account created successfuly');
-      return Future.value(true);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        snackbar.showCustomNotification(message: 'weak password');
-        print(e.message);
-        return Future.value(false);
-      } else if (e.code == 'email-already-in-use') {
-        snackbar.showCustomNotification(message: 'email is already exist');
-
-        print(e.message);
-        return Future.value(false);
+      if (credential.user !=null){
+        snackbar.showCustomNotification(message: 'Account created successfully');
+       await credential.user!.updateProfile(
+          displayName: name
+        );
+        navigatorkey.currentState!.pushNamedAndRemoveUntil(
+            route_names.layout,
+                (route) => false);
       }
-      return Future.value(false);
-    } catch (e) {
-      print(e);
-      return Future.value(false);
+      return credential;
+
     }
+  on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        snackbar.showCustomNotification(message: 'Weak password');
+      } else if (e.code == 'email-already-in-use') {
+        snackbar.showCustomNotification(message: 'Email is already in use');
+      }
+    }
+    catch (e) {
+      snackbar.showCustomNotification(message: 'An error occurred');
+    } finally {
+      EasyLoading.dismiss();
+    }
+    return null;
   }
 
-  static Future<bool> Login(String emailAddress, String password) async {
+
+
+
+  static Future<UserCredential?> Login(String emailAddress, String password) async {
     EasyLoading.show();
     try {
-      final credential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-      snackbar.showCustomNotification(message: 'Login successfuly');
-      return Future.value(true);
+      snackbar.showCustomNotification(message: 'Login successfully');
+      navigatorkey.currentState!.pushNamedAndRemoveUntil(
+        route_names.layout,
+            (route) => false,
+      );      return credential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        snackbar.showCustomNotification(message: 'user not found');
-        print(e.message);
-        return Future.value(false);
-      } else if (e.code == 'email-already-in-use') {
-        snackbar.showCustomNotification(message: 'wrong password');
+      snackbar.showCustomNotification(message: 'Login failed');
 
-        print(e.message);
-        return Future.value(false);
-      }
-      return Future.value(false);
     } catch (e) {
-      print(e);
-      return Future.value(false);
+      snackbar.showCustomNotification(message: 'An error occurred');
+
+    } finally {
+      EasyLoading.dismiss();
+    }
+    return null;
+  }
+
+  static Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<bool> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      snackbar.showCustomNotification(message: 'Password reset email sent');
+      return true;
+    } catch (e) {
+      snackbar.showCustomNotification(message: 'Error sending password reset email');
+      return false;
     }
   }
 }
+

@@ -15,38 +15,46 @@ class fav_tap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<app_provider>(context); // دا عشان تاخد الثيم وغيره
+    final appProvider = Provider.of<app_provider>(context);
+    final eventProvider = Provider.of<LayoutProvider>(context);
+    final theme = Theme.of(context);
 
-    return ChangeNotifierProvider(
-      create: (context) => LayoutProvider()..getfavevent(context),
-      child: Consumer<LayoutProvider>(
-        builder: (context, eventProvider, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(
+    // التأكد من تحميل الفيف إيفينتس بعد أول عملية بناء للواجهة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<LayoutProvider>(context, listen: false).getfavevent(context);
+    });
 
-                context.tr.favouriteevents,
-               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                  color: colorpallete.parimary,
-                ),
-              ),
-              centerTitle: true,
-
-            ),
-            body:
-                 ListView.separated(
-              padding: EdgeInsets.symmetric(horizontal: .015.w, vertical: .02.h),
-              itemBuilder: (context, index) {
-                final event = eventProvider.favEvents[index];
-                return EventCard(eventddatamodel: event);
-              },
-              separatorBuilder: (context, index) => SizedBox(height: .01.h),
-              itemCount: eventProvider.favEvents.length,
-            ),
-          );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          context.tr.favouriteevents,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: colorpallete.parimary,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: eventProvider.favEvents.isEmpty
+          ? Center(
+        child: Text(
+          context.tr.nofavouriteevents,  // التأكد من وجود النص باللغة المناسبة
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: theme.primaryColor,
+          ),
+        ),
+      )
+          : ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: .015.w, vertical: .02.h),
+        itemBuilder: (context, index) {
+          final event = eventProvider.favEvents[index];
+          return EventCard(eventddatamodel: event);
         },
+        separatorBuilder: (context, index) => SizedBox(height: .01.h),
+        itemCount: eventProvider.favEvents.length,
       ),
     );
   }

@@ -30,8 +30,6 @@ class welcomescreen extends StatelessWidget {
 
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(Appassets.smalllogo),
-              const SizedBox(width: 20),
               Image.asset(
                 Appassets.evently,
               ),

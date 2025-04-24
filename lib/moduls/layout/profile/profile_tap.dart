@@ -35,7 +35,7 @@ class ProfileTab extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(
-                  Appassets.profile,
+                  "assets/images/profile.png",
                   width: double.infinity,
                   fit: BoxFit.contain,
                 ),

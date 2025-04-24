@@ -83,7 +83,7 @@
   "thereAreNoEventsCreatedYet": "لم يتم إنشاء فعاليات بعد",
 
   "favouriteevents" : "الفعاليات المفضلة",
-
+  "nofavouriteevents" : "لا توجد فعاليات مفضلة",
   "createEvent": "إنشاء حدث",
   "title": "العنوان",
   "description": "الوصف",

@@ -15,13 +15,12 @@ class Appassets {
   static const String manager = "assets/images/manager-desk.png";
   static const String socialmedia = "assets/images/social-media.png";
   static const String evently = "assets/images/Evently.png";
-  static const String smalllogo = "assets/images/Group 3.png";
   static const String googlelogo = "assets/images/Group 18559.png";
   static const String darktheme = "assets/icons/Moon.png";
   static const String lighttheme = "assets/icons/Sun (1).png";
   static const String english = "assets/icons/LR.png";
   static const String arabic = "assets/icons/EG.png";
-  static const String profile = "assets/images/Frame 42.png";
+  static const String profile = "assets/images/profile.png";
 
 
 }

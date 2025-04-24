@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
   class LayoutProvider extends ChangeNotifier {
     int selectedIndex = 0;
     int tapSelectedIndex = 0;
+    String categoryId = '';
 
-    List<EventModel> allEvents = [];
     List<EventModel> favEvents = [];
 
     /// ✅ Navigate
@@ -100,103 +100,77 @@ import 'package:flutter/material.dart';
 
     bool isLoading = false;
 
-    /// ✅ Get all events
-    Future<void> fetchAllEvents() async {
-      isLoading = true;
-      notifyListeners();
-
-      try {
-        // إعادة تهيئة allEvents لضمان عدم تكرار البيانات
-        allEvents.clear();
-
-        // جلب البيانات
-        var data = await FirebaseFunctions.getEvents();
-
-        // إضافة البيانات إلى القائمة
-        for (var element in data) {
-          allEvents.add(element.data());
-        }
-      } catch (e) {
-        print("Error fetching events: $e");
-      } finally {
-        isLoading = false;
-        notifyListeners();  // إخطار الـ UI بأن التحميل انتهى
-      }
-    }
-
-    Future<void> getfavevent(BuildContext context) async {
-      favEvents.clear(); // مهم علشان ما تتكررش الأحداث
-
-      try {
-        var favouriteEvents = await FirebaseFunctions.getFavEvents();
-
-        if (favouriteEvents.isEmpty) {
-          snackbar.showCustomNotification(
-            message: context.tr.thereAreNoEventsCreatedYet,
-          );
-        }
-        for (var element in favouriteEvents) {
-          favEvents.add(element.data());
-        }
-
-        notifyListeners();
-      } catch (e) {
-        snackbar.showCustomErrormessage(
-          message: context.tr.somethingWentWrong,
-        );
-      }
-    }
-
-
-
-    Future<void>setfavourit (EventModel event) async{
-
-    await FirebaseFunctions.setFav(event);
-    fetchAllEvents();
-
-    notifyListeners();
-
-    }
-
-    String currentCategoryId = '';
-
+    List<EventModel> allEvents = [];
     List<EventModel> filteredEvents = [];
 
-    /// ✅ Filter events by category name
-    List<EventModel> filterByCategory(String categoryId) {
-      if (currentCategoryId == "0") {
-        filteredEvents = allEvents;
-        return filteredEvents;
-      } else {
-        filteredEvents = allEvents.where((event) => event.categoryId == categoryId).toList();
-        return filteredEvents;
-
+    Future<void> fetchAllEvents() async {
+      try {
+        // جلب البيانات من Firebase باستخدام الدالة getstreamdata
+        var stream = FirebaseFunctions.getstreamdata();
+        stream.listen((QuerySnapshot<EventModel> snapshot) {
+          allEvents = snapshot.docs.map((doc) => doc.data()).toList();
+          // نعرض جميع الأحداث في البداية
+          filteredEvents = List.from(allEvents);
+          notifyListeners(); // نحدث الواجهة
+        });
+      } catch (e) {
+        print("Error fetching events: $e");
       }
+    }
+
+
+    Future<void> loadEventsByCategory(String categoryId) async {
+      if(categoryId == '0' || categoryId == 'All' || categoryId == 'all') {
+        // إذا كانت الفئة هي "All"، نعرض جميع الأحداث
+        filteredEvents = List.from(allEvents);
+      } else
+           try {
+        // جلب البيانات من Firebase باستخدام الدالة getstreamdata
+        var stream = FirebaseFunctions.getEventsByCategory(categoryId);
+        stream.listen((QuerySnapshot<EventModel> snapshot) {
+          allEvents = snapshot.docs.map((doc) => doc.data()).toList();
+          // نعرض جميع الأحداث في البداية
+          filteredEvents = List.from(allEvents);
+          notifyListeners(); // نحدث الواجهة
+        });
+      } catch (e) {
+        print("Error fetching events: $e");
+      }
+    }
+
+
+
+      Future<void> getfavevent(BuildContext context) async {
+
+        favEvents.clear(); // مهم علشان ما تتكررش الأحداث
+
+        try {
+          var favouriteEvents = await FirebaseFunctions.getFavEvents();
+
+
+          for (var element in favouriteEvents) {
+            favEvents.add(element.data());
+          }
+
+          notifyListeners();
+        } catch (e) {
+          snackbar.showCustomErrormessage(
+            message: context.tr.somethingWentWrong,
+          );
+        }
+      }
+
+
+    Future<void> setfavourit(EventModel event) async {
+      // تحديث حالة الإعجاب في Firebase
+      await FirebaseFunctions.setFav(event);
+
+      // إعادة تحميل البيانات لتحديث واجهة المستخدم بعد التغيير
+      await fetchAllEvents();  // تأكد من أنك تقوم بإعادة تحميل البيانات بعد التحديث
       notifyListeners();
     }
+
+
 
 
   }
-
-
-
-  /// ✅ Filter events by category name
-
-
-  /// ✅ Delete
-
-  /// ✅ Update
-
-
-
-
-
-
-
-
-
-
-
-
-
-

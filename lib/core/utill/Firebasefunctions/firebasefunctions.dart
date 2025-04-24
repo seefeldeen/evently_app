@@ -9,7 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
   static CollectionReference<EventModel> getRef() {
   return FirebaseFirestore.instance.collection("Events").withConverter(
   fromFirestore: (snapshot, options) =>
-  EventModel.formJson(snapshot.data()!),
+  EventModel.fromJson(snapshot.data()!),
   toFirestore: (value, options) => value.toJson(),
   );
   }
@@ -30,37 +30,28 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
   return docRef.update({"isFav": !data.isFav});
 
   }
+ //
 
-  static Future<List<QueryDocumentSnapshot<EventModel>>> getEvents() async{
-  var ref  = getRef();
- var docs = await ref.get();
-  return docs.docs;
+
+  static Stream<QuerySnapshot<EventModel>> getstreamdata(){
+    var collectionref = getRef().
+    where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid);
+return collectionref.snapshots();
   }
 
 
-  static Future<List<QueryDocumentSnapshot<EventModel>>> getEventsByCategory(String categoryId) async {
-    try {
-      // الحصول على مرجع من مجموعة "events"
-      var ref = FirebaseFirestore.instance.collection('events');
 
-      // إجراء الاستعلام على مجموعة "events" باستخدام الفئة
-      var querySnapshot = await ref.where('categoryId', isEqualTo: categoryId)
-          .get();
+  static Stream<QuerySnapshot<EventModel>>  getEventsByCategory(String categoryId)  {
 
-      // تحويل المستندات التي تم جلبها إلى النوع الصحيح
-      List<QueryDocumentSnapshot<EventModel>> eventList = querySnapshot.docs
-          .map((doc) {
-        // تحويل المستند من نوع Map<String, dynamic> إلى EventModel
-        return doc as QueryDocumentSnapshot<EventModel>;
-      }).toList();
+      var ref =  getRef()
+          .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('categoryId', isEqualTo: categoryId);
 
-      return eventList;
-    } catch (e) {
-      // في حال حدوث أي خطأ، طباعة الخطأ
-      print("Error fetching events by category: $e");
-      rethrow;
-    }
+      return ref.snapshots();
+
   }
+
+
 
 
   static Future<List<QueryDocumentSnapshot<EventModel>>> getFavEvents() async {
@@ -68,19 +59,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
   var docs = await ref.where("isFav", isEqualTo: true).get();
   return docs.docs;
   }
-
-  // static Future<List<QueryDocumentSnapshot<EventModel>>> search(
-  //     String q) async {
-  //   var ref = getRef();
-  //   var docs = await ref
-  //       .orderBy('title')
-  //       .startAt([q])
-  //       .endAt(['$q\uf8ff'])
-  //       .where("isFav", isEqualTo: true)
-  //       .get();
-  //   return docs.docs;
-  // }
-
 
 
   }

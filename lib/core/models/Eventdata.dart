@@ -51,7 +51,7 @@ class EventModel {
         this.isFav = false,
         required this.categoryImage});
 
-  EventModel.formJson(Map<String, dynamic> json)
+  EventModel.fromJson(Map<String, dynamic> json)
       : this(
     userId: json["userId"],
     id: json["id"],

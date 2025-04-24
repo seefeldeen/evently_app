@@ -36,10 +36,9 @@ class HomeTap extends StatelessWidget {
     // 👇 دي أهم سطر هنضيفه عشان نستخدم الفانكشن مرة واحدة بس بعد أول build
     final provider = Provider.of<LayoutProvider>(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.fetchAllEvents(
-      );
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   provider.loadEventsByCategory("All"); // تحميل جميع البيانات عند أول فتح الصفحة
+    // });
     return Consumer<LayoutProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -110,13 +109,14 @@ class HomeTap extends StatelessWidget {
                       length: Eventcategory.categories.length,
                       child: TabBar(
                         tabAlignment : TabAlignment.start,
-                        onTap: (index) async {
-                          // عند الضغط على التاب، قم بتحميل البيانات الخاصة بالفئة المحددة
-                          provider.onTapSelected(index);
-                          String categoryId = Eventcategory.categories[index].id;
-                          // استدعاء الدالة لجلب الأحداث من Firebase حسب الفئة
-                          await provider.filterByCategory(categoryId);
-                        }    ,
+                        onTap: (index) async  {
+
+                      provider.onTapSelected(index);
+
+                      String categoryId = Eventcategory.categories[index].categorynam;
+
+                      await provider.loadEventsByCategory(categoryId);
+                      },
                         indicatorColor: Colors.transparent,
                         indicator: BoxDecoration(
                           color: isDark ? colorpallete.darkblue : Colors.white,
@@ -150,11 +150,11 @@ class HomeTap extends StatelessWidget {
           ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: .015.w, vertical: .02.h),
             itemBuilder: (context, index) {
-              final event = provider.allEvents[index];
+              final event = provider.filteredEvents[index];
               return EventCard(eventddatamodel: event);
             },
             separatorBuilder: (context, index) => SizedBox(height: .01.h),
-            itemCount: provider.allEvents.length,
+            itemCount: provider.filteredEvents.length,
           )
 
 

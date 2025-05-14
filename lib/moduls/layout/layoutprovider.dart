@@ -1,20 +1,16 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
-import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/models/Eventcategory.dart';
 import 'package:events/core/models/Eventdata.dart';
-import 'package:events/core/services/snackbarservice.dart';
 import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
-import 'package:events/main.dart';
 import 'package:events/moduls/layout/favourite/fav_tap.dart';
 import 'package:events/moduls/layout/home/home_tap.dart';
 import 'package:events/moduls/layout/location/map_tap.dart';
 import 'package:events/moduls/layout/profile/profile_tap.dart';
 import 'package:flutter/material.dart';
-
-  import 'package:events/core/models/Eventdata.dart';
-  import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
   class LayoutProvider extends ChangeNotifier {
     int selectedIndex = 0;
@@ -22,6 +18,7 @@ import 'package:flutter/material.dart';
     String categoryId = '';
 
     List<EventModel> favEvents = [];
+    bool isLoadingFav = false;
 
     /// ✅ Navigate
     void changeBottomNav(int index) {
@@ -34,15 +31,13 @@ import 'package:flutter/material.dart';
       notifyListeners();
     }
 
-    List<Widget> bottombarwidget = [
+    List<Widget>  bottombarwidget = [
       HomeTap(),
-      map_tap(),
-      SizedBox(),
-      fav_tap(),
-      ProfileTab(),
+      const map_tap(),
+    const  SizedBox(),
+       const fav_tap(),
+     const ProfileTab(),
     ];
-    bool hasFetched = false;
-
 
     List<Eventcategory> categories = [
 
@@ -120,57 +115,175 @@ import 'package:flutter/material.dart';
 
 
     Future<void> loadEventsByCategory(String categoryId) async {
-      if(categoryId == '0' || categoryId == 'All' || categoryId == 'all') {
-        // إذا كانت الفئة هي "All"، نعرض جميع الأحداث
-        filteredEvents = List.from(allEvents);
-      } else
-           try {
+      if (categoryId == '0' || categoryId == 'All' || categoryId == 'all') {
+        fetchAllEvents();
+      } else {
+        try {
+          // جلب البيانات من Firebase باستخدام الدالة getstreamdata
+          var stream = FirebaseFunctions.getEventsByCategory(categoryId);
+          stream.listen((QuerySnapshot<EventModel> snapshot) {
+            allEvents = snapshot.docs.map((doc) => doc.data()).toList();
+            // نعرض جميع الأحداث في البداية
+            filteredEvents = List.from(allEvents);
+            notifyListeners(); // نحدث الواجهة
+          });
+        } catch (e) {
+          print("Error fetching events: $e");
+        }
+      }
+    }
+
+
+
+    Future<void> getfavevent(BuildContext context) async {
+      favEvents.clear(); // مهم علشان ما تتكررش الأحداث
+
+      try {
         // جلب البيانات من Firebase باستخدام الدالة getstreamdata
-        var stream = FirebaseFunctions.getEventsByCategory(categoryId);
+        var stream = FirebaseFunctions.getFavEventsStream();
         stream.listen((QuerySnapshot<EventModel> snapshot) {
-          allEvents = snapshot.docs.map((doc) => doc.data()).toList();
+          favEvents = snapshot.docs.map((doc) => doc.data()).toList();
           // نعرض جميع الأحداث في البداية
-          filteredEvents = List.from(allEvents);
           notifyListeners(); // نحدث الواجهة
         });
       } catch (e) {
         print("Error fetching events: $e");
       }
+
+      notifyListeners();  // Notify listeners to update the UI after data is fetched
     }
 
 
 
-      Future<void> getfavevent(BuildContext context) async {
+    Location location = Location();
 
-        favEvents.clear(); // مهم علشان ما تتكررش الأحداث
+    String locationmessage = "";
 
-        try {
-          var favouriteEvents = await FirebaseFunctions.getFavEvents();
+    late GoogleMapController mapController;
 
+      CameraPosition cameraPosition = const CameraPosition(
+      target: LatLng(30.0444, 31.2357),
+      zoom: 14.4746,
+    );
 
-          for (var element in favouriteEvents) {
-            favEvents.add(element.data());
-          }
+    Set<Marker> markers = {
+      const Marker(
+        markerId: MarkerId('marker1'),
+        position:LatLng(
+          37.42796133580664,
+          -122.085749655962,
+        ),
+      ),
 
+    };
+
+    Future<void> getlocation() async {
+      bool isLocationEnabled = await _getlocationperrmisions();
+      if(isLocationEnabled==false){
+        notifyListeners();
+        return;
+      }
+      bool locationservice = await  _locationserviseenabled();
+        if (!locationservice) {
           notifyListeners();
-        } catch (e) {
-          snackbar.showCustomErrormessage(
-            message: context.tr.somethingWentWrong,
-          );
+          return;
+        } else {
+
+          var locationdata = await location.getLocation();
+
+            changelocationonmap(locationdata);
+
         }
       }
 
 
-    Future<void> setfavourit(EventModel event) async {
-      // تحديث حالة الإعجاب في Firebase
-      await FirebaseFunctions.setFav(event);
+    void setlocationlistener(){
 
-      // إعادة تحميل البيانات لتحديث واجهة المستخدم بعد التغيير
-      await fetchAllEvents();  // تأكد من أنك تقوم بإعادة تحميل البيانات بعد التحديث
-      notifyListeners();
+       location.changeSettings(
+
+          accuracy: LocationAccuracy.high,
+          interval: 1000,
+          distanceFilter: 10,
+        );
+      location.onLocationChanged.listen((LocationData){
+        changelocationonmap(LocationData);
+
+      });
+
     }
+
+   void changelocationonmap( LocationData locationdata){
+
+
+     cameraPosition = CameraPosition(
+         target: LatLng(locationdata.latitude?? 0, locationdata.longitude??0),
+         zoom: 17);
+     markers = {
+       Marker(
+         markerId:  const MarkerId('marker1'),
+         position: LatLng(locationdata.latitude?? 0, locationdata.longitude??0),
+       )};
+
+     mapController.animateCamera(CameraUpdate.newCameraPosition(
+         CameraPosition(
+           target: LatLng(locationdata.latitude?? 0, locationdata.longitude??0),
+           zoom: 17
+         )
+     ));
+      notifyListeners();
+   }
+
+
+   void gotoeventlocation( LatLng eventlocation  ){
+
+      cameraPosition = CameraPosition(
+          target: eventlocation,
+          zoom: 17);
+      markers = {
+        Marker(
+          markerId:  const MarkerId('marker1'),
+          position: eventlocation,
+        )};
+
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: eventlocation,
+              zoom: 17
+          )
+      ));
+      notifyListeners();
+
+   }
+
+
+    Future<bool> _getlocationperrmisions() async{
+
+      var permissionstatus =await location.hasPermission();
+      if(permissionstatus == PermissionStatus.denied){
+        permissionstatus = await location.requestPermission();
+      }
+    return permissionstatus == PermissionStatus.granted;
+
+    }
+
+
+    Future<bool> _locationserviseenabled()async{
+
+      var serviseenabled = await location.serviceEnabled();
+      if(serviseenabled == false){
+        serviseenabled = await location.requestService();
+      }
+      return serviseenabled;
+
+    }
+
+    TextEditingController edittitle = TextEditingController();
+    TextEditingController editDesc = TextEditingController();
+
 
 
 
 
   }
+
+

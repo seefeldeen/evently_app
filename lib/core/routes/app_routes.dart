@@ -1,7 +1,10 @@
 
+import 'package:events/core/models/Eventdata.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/moduls/createevent/create_event.dart';
+import 'package:events/moduls/createevent/pick_location.dart';
 import 'package:events/moduls/forgetpass/forgetpass.dart';
+import 'package:events/moduls/layout/home/event_details.dart';
 import 'package:events/moduls/layout/layout.dart';
 import 'package:events/moduls/onboardingscreens/onboareding1.dart';
 import 'package:events/moduls/onboardingscreens/welcomescreen.dart';
@@ -25,7 +28,7 @@ abstract class AppRoutes{
 
       case route_names.onboarding:
 
-        return MaterialPageRoute(builder: (context)=>  onboarding(),
+        return MaterialPageRoute(builder: (context)=>  const onboarding(),
             settings:  settings
 
         );
@@ -50,26 +53,48 @@ abstract class AppRoutes{
         );
       case route_names.welcome :
 
-        return MaterialPageRoute(builder: (context)=> welcomescreen(),
+        return MaterialPageRoute(builder: (context)=> const welcomescreen(),
             settings:  settings
 
         );
         case route_names.layout :
 
-        return MaterialPageRoute(builder: (context)=> layout(),
+        return MaterialPageRoute(builder: (context)=> const layout(),
             settings:  settings
 
         );
         case route_names.eventcreation :
-
-        return MaterialPageRoute(builder: (context)=> CreateEvent(),
+         final event = settings.arguments as EventModel?;
+        return MaterialPageRoute(builder: (context)=> CreateEvent(
+            event: event,
+        ),
             settings:  settings
 
         );
 
+        case route_names.picklocation :
+        return MaterialPageRoute(builder: (context)=> const pick_location(),
+            settings:  settings
+
+        );
+
+    case route_names.eventdetails:
+    final event = settings.arguments as EventModel;
+    return MaterialPageRoute(
+    builder: (context) => event_details(event: event),
+    settings: settings,
+    );
+
+    // case route_names.eventedit:
+    // final event = settings.arguments as EventModel;
+    // return MaterialPageRoute(
+    // builder: (context) => edit_event(),
+    // );
+
+
        default  :
 
-        return MaterialPageRoute(builder: (context)=> SplashScreen(),
+        return MaterialPageRoute(builder: (context)=> const SplashScreen(),
             settings:  settings
 
         );

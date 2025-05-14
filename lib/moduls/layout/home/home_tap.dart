@@ -1,20 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/core/ColorPallete/colorpallete.dart';
-import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
-import 'package:events/core/manager/auth_provider.dart';
 import 'package:events/core/models/Eventcategory.dart';
-import 'package:events/core/models/Eventdata.dart';
-import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
 import 'package:events/core/widgets/Customtextshape.dart';
 import 'package:events/core/widgets/Cutomelevatedbutton.dart';
 import 'package:events/main.dart';
 import 'package:events/moduls/layout/Widgets/event_card.dart';
 import 'package:events/moduls/layout/Widgets/hometapbar.dart';
-import 'package:events/moduls/layout/home/home_tap.dart';
-import 'package:events/moduls/layout/home/home_tap.dart';
-import 'package:events/moduls/layout/home/home_tap.dart';
 import 'package:events/moduls/layout/layoutprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +58,7 @@ class HomeTap extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Customtextshape.Getsmalltext(
-                                "Welcome back", context),
+                                context.tr.welcomeBack, context),
                             Customtextshape.Getbigtext(username, context)
                                 .Setoptionalpadding(
                                 context, 4, 0, 0, 0, enablemediaquery: true),

@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/navigator.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:events/core/services/snackbarservice.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class firebase_auth {
 
@@ -47,6 +46,24 @@ class firebase_auth {
 
 
 
+  static Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+
 
   static Future<UserCredential?> Login(String emailAddress, String password) async {
     EasyLoading.show();
@@ -60,7 +77,7 @@ class firebase_auth {
         route_names.layout,
             (route) => false,
       );      return credential;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       snackbar.showCustomNotification(message: 'Login failed');
 
     } catch (e) {
@@ -74,6 +91,7 @@ class firebase_auth {
 
   static Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 
   static Future<bool> resetPassword(String email) async {

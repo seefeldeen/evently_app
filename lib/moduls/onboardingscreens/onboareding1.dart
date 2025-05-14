@@ -12,7 +12,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class onboarding extends StatefulWidget {
   static const String routeName = "/on_boarding_view";
 
-  onboarding({super.key});
+  const onboarding({super.key});
 
   @override
   State<onboarding> createState() => _OnboardingState();
@@ -54,7 +54,7 @@ class _OnboardingState extends State<onboarding> {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class _OnboardingState extends State<onboarding> {
                         : TextDirection.ltr,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.all(18.0),
                         child: SizedBox(
                           height: 400,
                           child: Image.asset(
@@ -118,7 +118,7 @@ class _OnboardingState extends State<onboarding> {
               },
             ).Sethorizontalpadding(context, .05),
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -134,25 +134,25 @@ class _OnboardingState extends State<onboarding> {
                     );
                   }
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.navigate_before,
                   color: colorpallete.parimary,
                   size: 50,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               // Smooth Indicator
               SmoothPageIndicator(
                 controller: _pageController,
                 count: welcomePhotos.length,
-                effect: ExpandingDotsEffect(
+                effect: const ExpandingDotsEffect(
                   dotHeight: 8,
                   dotWidth: 8,
                   activeDotColor: Colors.blue,
                   dotColor: Colors.grey,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               // Next Button
               IconButton(
                 onPressed: () {
@@ -165,7 +165,7 @@ class _OnboardingState extends State<onboarding> {
                     );
                   }
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.navigate_next,
                   color: colorpallete.darkblue,
                   size: 50,
@@ -173,7 +173,7 @@ class _OnboardingState extends State<onboarding> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
         ],
       ),
     );

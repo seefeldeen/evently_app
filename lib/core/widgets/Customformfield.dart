@@ -1,9 +1,6 @@
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
-import 'package:events/core/manager/app_provider.dart';
-import 'package:events/moduls/layout/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class CustomTextField extends StatefulWidget {
 
@@ -46,11 +43,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Container(
       decoration: BoxDecoration(
         border:   Border.all(
-          color: colorpallete.darkblue,width: 2
+          color: colorpallete.darkblue,width: 0
         ),
           borderRadius: BorderRadius.circular(15),
       ) ,
-      child: TextFormField(textAlignVertical: TextAlignVertical.center,
+      child: TextFormField(
+      textAlignVertical: TextAlignVertical.center,
         style: TextStyle(
             color: textColor,
             fontSize: 16,
@@ -67,6 +65,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             prefixIcon: Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: widget.prefixIcon,
+              ),enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: colorpallete.darkblue,
+                  width: 1.5,
+                ),
+          borderRadius: BorderRadius.circular(15),
               ),
             suffixIcon: widget.isPassword
                 ? IconButton(

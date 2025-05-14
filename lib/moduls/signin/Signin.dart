@@ -55,7 +55,7 @@ class Signin extends StatelessWidget {
                           // Email
                           CustomTextField(
                             hintText: context.tr.email,
-                            prefixIcon: Icon(Icons.email)  ,
+                            prefixIcon: const Icon(Icons.email)  ,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return context.tr.emailCantBeEmpty;
@@ -72,7 +72,7 @@ class Signin extends StatelessWidget {
                           CustomTextField(
                             controller: Providerkind.emailController,
                             hintText: context.tr.password,
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             isPassword: true,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
@@ -94,7 +94,7 @@ class Signin extends StatelessWidget {
                               },
                               child: Text(
                                 context.tr.forgotPassword,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
@@ -150,14 +150,15 @@ class Signin extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(context.tr.dontHaveAnAccount),
+                              Text(context.tr.dontHaveAnAccount,
+                              style: Theme.of(context).textTheme.bodyMedium,),
                               TextButton(
                                 onPressed: () {
                                   navigatorkey.currentState!.pushNamed(route_names.Sign_up);
                                 },
                                 child: Text(
                                   context.tr.createAccount,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
@@ -175,7 +176,13 @@ class Signin extends StatelessWidget {
                               const Expanded(child: Divider(color: Colors.grey)),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(context.tr.or),
+                                child: Text(context.tr.or,
+                                  style: const TextStyle(
+                                    color: colorpallete.darkblue,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                               const Expanded(child: Divider(color: Colors.grey)),
                             ],
@@ -185,13 +192,13 @@ class Signin extends StatelessWidget {
 
                           ElevatedButton(
                             onPressed: () {
-                              navigatorkey.currentState!.pushReplacementNamed(route_names.layout);
+                              Providerkind.signInWithGoogle();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               padding: const EdgeInsets.all(16),
                               shape: RoundedRectangleBorder(
-                                side: BorderSide(color: colorpallete.darkblue),
+                                side: const BorderSide(color: colorpallete.darkblue),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                             ),
@@ -202,7 +209,10 @@ class Signin extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Text(
                                   context.tr.logInWithGoogle,
-                                  style: TextStyle(color: colorpallete.darkblue),
+                                  style: const TextStyle(color: colorpallete.darkblue,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),

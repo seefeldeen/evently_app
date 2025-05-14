@@ -2,7 +2,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/app_routes.dart';
 import 'package:events/core/theme/AppThemeManager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

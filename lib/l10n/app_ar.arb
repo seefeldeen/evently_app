@@ -39,7 +39,7 @@
 
   "logInWithGoogle": "تسجيل الدخول باستخدام جوجل",
 
-  "register": "تسجيل",
+  "register": "انشاء حساب",
 
   "nameCantBeEmpty": "الاسم لا يمكن أن يكون فارغًا",
   "name": "الاسم",
@@ -84,7 +84,7 @@
 
   "favouriteevents" : "الفعاليات المفضلة",
   "nofavouriteevents" : "لا توجد فعاليات مفضلة",
-  "createEvent": "إنشاء حدث",
+  "createEvent": "ادارة الحدث",
   "title": "العنوان",
   "description": "الوصف",
   "wantSomethingToReminderYou": "هل ترغب في تذكيرك بشيء؟",
@@ -99,5 +99,12 @@
   "saveEvent": "حفظ الفعالية",
 "loading": "جارٍ التحميل...",
   "forgetPassword": "نسيت كلمة المرور",
-  "resetPassword": "إعادة تعيين كلمة المرور"
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "taponlovationtoselect" : " اضغط علي الموقع للتحديد ",
+  "pleasechooselocation" : "اختر الموقع",
+  "eventdetails": "تفاصيل الفعالية",
+  "eventdeleted": "تم حذف الفعالية",
+  "failedToeditEvent" : "فشل تعديل الفعالية.",
+  "eventupdated": "Event updated",
+  "eventWaseditedSuccessfully" : "تم تعديل الفعالية بنجاح"
 }

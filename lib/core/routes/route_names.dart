@@ -11,6 +11,9 @@ class route_names
       static const String welcome = "/welcome_Screen";
       static const String layout = "layout";
       static const String eventcreation = "/createevent";
+      static const String picklocation = "/pick_location";
+      static const String eventdetails = "/event_details";
+      static const String eventedit = "/event_edit";
 
 
   }

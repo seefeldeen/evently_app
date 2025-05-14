@@ -1,7 +1,5 @@
 
 import 'package:events/core/constants/App_assets/Appassets.dart';
-import 'package:events/core/constants/App_assets/Categories.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Eventcategory {

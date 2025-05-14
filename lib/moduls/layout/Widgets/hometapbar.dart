@@ -11,7 +11,7 @@ class hometapbar extends StatelessWidget {
   final IconData iconns;
   final bool isselected;
 
-  hometapbar({
+  const hometapbar({
     super.key,
     required this.text,
     required this.iconns,

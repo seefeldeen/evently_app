@@ -1,7 +1,6 @@
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Customtextshape {
 
@@ -17,6 +16,21 @@ class Customtextshape {
      decorationColor: colorpallete.parimary,
      color: colorpallete.parimary,));
   }
+
+
+ static Widget Getsmalltextcolored(String textdata, BuildContext context, Color color){
+
+
+   return Text(textdata, style: Theme.of(context)
+       .textTheme
+       .titleMedium
+       ?.copyWith(
+     fontSize: 18,
+     decorationThickness: 2,
+     decorationColor: colorpallete.parimary,
+     color: color,));
+ }
+
 
   static Widget Getbigtext(String textdata, BuildContext context){
 

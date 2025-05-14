@@ -1,12 +1,10 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {

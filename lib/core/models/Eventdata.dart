@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 class EventModel {
   String? userId;
   String? id;
@@ -8,37 +6,10 @@ class EventModel {
   String title;
   String desc;
   String eventDate;
-
-  // @override
-  // bool operator ==(Object other) =>
-  //     identical(this, other) ||
-  //         other is EventModel &&
-  //             runtimeType == other.runtimeType &&
-  //             userId == other.userId &&
-  //             id == other.id &&
-  //             categoryId == other.categoryId &&
-  //             categoryImage == other.categoryImage &&
-  //             title == other.title &&
-  //             desc == other.desc &&
-  //             eventDate == other.eventDate &&
-  //             eventTime == other.eventTime &&
-  //             isFav == other.isFav;
-  //
-  // @override
-  // int get hashCode =>
-  //     userId.hashCode ^
-  //     id.hashCode ^
-  //     categoryId.hashCode ^
-  //     categoryImage.hashCode ^
-  //     title.hashCode ^
-  //     desc.hashCode ^
-  //     eventDate.hashCode ^
-  //     eventTime.hashCode ^
-  //     isFav.hashCode;
-
+  double latitude;
+  double longitude;
   String eventTime;
-  bool isFav
-  ;
+  bool isFav;
 
   EventModel(
       {this.userId,
@@ -49,7 +20,9 @@ class EventModel {
         required this.eventTime,
         required this.categoryId,
         this.isFav = false,
-        required this.categoryImage});
+        required this.categoryImage,
+      this.longitude =0,
+      this.latitude = 0});
 
   EventModel.fromJson(Map<String, dynamic> json)
       : this(
@@ -62,6 +35,8 @@ class EventModel {
     categoryId: json["categoryId"],
     categoryImage: json["categoryImage"],
     isFav: json["isFav"] ?? false,
+    latitude: json["latitude"]?? 0,
+    longitude: json["longitude"]??0
   );
 
   Map<String, dynamic> toJson() {
@@ -75,6 +50,8 @@ class EventModel {
       "eventDate": eventDate,
       "eventTime": eventTime,
       "isFav": isFav,
+      "longitude" : longitude,
+      "latitude" : latitude
     };
   }
 }

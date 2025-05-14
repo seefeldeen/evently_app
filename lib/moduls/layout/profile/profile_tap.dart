@@ -1,19 +1,14 @@
 import 'package:events/core/ColorPallete/colorpallete.dart';
-import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
 import 'package:events/core/extensions/SizeExtention.dart';
 import 'package:events/core/manager/app_provider.dart';
-import 'package:events/core/manager/auth_provider.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/core/utill/Firebasefunctions/firebase_Auth.dart';
 import 'package:events/core/widgets/Customtextshape.dart';
-import 'package:events/core/widgets/Cutomelevatedbutton.dart';
 import 'package:events/main.dart';
-import 'package:events/moduls/signin/Signin.dart';
-import 'package:events/moduls/signin/Signin.dart';
-import 'package:events/moduls/signin/Signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -28,7 +23,7 @@ class ProfileTab extends StatelessWidget {
     var username = FirebaseAuth.instance.currentUser?.displayName ?? "User";
     bool Isdark() => appProvider.currenttheme == ThemeMode.dark;
     return SafeArea(
-      child: Scaffold(
+      child: Scaffold(resizeToAvoidBottomInset: true,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -177,15 +172,17 @@ class ProfileTab extends StatelessWidget {
                 ),
               ),
               onPressed: () {
+                EasyLoading.show();
                 firebase_auth.logout();
                 navigatorkey.currentState!.pushNamedAndRemoveUntil(
                 route_names.Sign_in,
                   (route) => false,
                 );
+                EasyLoading.dismiss();
               },
-              icon: Icon(Icons.logout,color: Colors.white70,
+              icon: const Icon(Icons.logout,color: Colors.white70,
               size: 30,), // الأيقونة
-              label: Text(context.tr.logout,style:TextStyle(
+              label: Text(context.tr.logout,style:const TextStyle(
                 color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

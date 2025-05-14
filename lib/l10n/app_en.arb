@@ -81,10 +81,10 @@
   "somethingWentWrong": "Something went wrong",
   "thereAreNoEventsCreatedYet": "There are no events created yet",
 "favouriteevents" : "Favourite events",
-  "createEvent": "Create event",
+  "createEvent": "Manage event",
   "title": "Title",
   "description": "Description",
-  "wantSomethingToReminderYou": "want something to reminder you!?",
+  "wantSomethingToReminderYou": "want something to remind you!?",
   "eventDate": "Event date",
     "eventTime": "Event time",
   "chooseDate": "choose date",
@@ -97,5 +97,13 @@
   "loading": "Loading...",
 
   "forgetPassword": "Forget password",
-  "resetPassword": "Reset Password"
+  "resetPassword": "Reset Password",
+  "taponlovationtoselect" : "Tap on location to select",
+  "pleasechooselocation" : "please choose location",
+  "eventdetails": "Event details",
+  "eventdeleted": "Event deleted",
+  "editevent": "Edit event",
+  "failedToeditEvent" : "Failed to edit event.",
+    "eventupdated": "Event updated",
+  "eventWaseditedSuccessfully": "Event was edited successfully"
 }

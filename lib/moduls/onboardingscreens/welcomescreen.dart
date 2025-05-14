@@ -2,14 +2,11 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
-import 'package:events/core/extensions/SizeExtention.dart';
 import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/route_names.dart';
 import 'package:events/main.dart';
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class welcomescreen extends StatelessWidget {
   const welcomescreen({super.key});
@@ -38,7 +35,7 @@ class welcomescreen extends StatelessWidget {
           Image.asset(
             Appassets.beingcreative,
           ).Setoptionalpadding(context, 14, 0, 12, 12),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           Text(context.tr.startTitle,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontSize: 24,
@@ -68,10 +65,10 @@ class welcomescreen extends StatelessWidget {
                       decorationColor: colorpallete.darkblue,
                       color: colorpallete.darkblue,
                     )),
-            Spacer(),
+            const Spacer(),
             AnimatedToggleSwitch<String>.rolling(
               current: provider.lang,  // Get the current language from the provider
-              values: ["en", "ar"],
+              values: const ["en", "ar"],
               onChanged: (i) {
                 provider.changeLang();  // Update the language using the provider
               },
@@ -100,10 +97,10 @@ class welcomescreen extends StatelessWidget {
                       decorationColor: colorpallete.darkblue,
                       color: colorpallete.darkblue,
                     )),
-            Spacer(),
+            const Spacer(),
             AnimatedToggleSwitch<ThemeMode>.rolling(
               current: Provider.of<app_provider>(context).currenttheme,  // Get the theme from the provider
-              values: [
+              values: const [
                 ThemeMode.light,
                 ThemeMode.dark,
               ],
@@ -131,7 +128,7 @@ class welcomescreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: colorpallete.darkblue,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
               ),

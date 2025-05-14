@@ -9,7 +9,7 @@ class Eventtypetab extends StatelessWidget {
   final IconData iconns ;
   final bool isselected;
 
-   Eventtypetab({super.key,
+   const Eventtypetab({super.key,
     required this.text, required this.iconns,
     required this.isselected});
 
@@ -18,7 +18,7 @@ class Eventtypetab extends StatelessWidget {
     return   Container(
 
     width: .28.w, height: 2.5* Checkbox.width
-    ,padding: EdgeInsets.all(6)
+    ,padding: const EdgeInsets.all(6)
       ,decoration: BoxDecoration(
         color: isselected? colorpallete.parimary : colorpallete.darkblue, // You can set a background color if needed
         borderRadius: BorderRadius.circular(50), // This will round the corners

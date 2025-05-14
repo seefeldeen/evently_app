@@ -1,4 +1,3 @@
-import 'package:events/core/constants/App_assets/Appassets.dart';
 
 class Categorydata {
 

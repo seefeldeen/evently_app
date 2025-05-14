@@ -39,18 +39,18 @@ class AppThemeManager {
           borderSide: const BorderSide(color: Colors.grey)),
     ),
     textTheme: const TextTheme(
-        bodySmall: TextStyle(color: colorpallete.parimary, fontSize: 14),
-        bodyMedium: TextStyle(color: colorpallete.parimary, fontSize: 16),
-        bodyLarge: TextStyle(color: colorpallete.parimary, fontSize: 18)),
+        bodySmall: TextStyle(color: Colors.black, fontSize: 14),
+        bodyMedium: TextStyle(color: Colors.black, fontSize: 16),
+        bodyLarge: TextStyle(color: Colors.black, fontSize: 18)),
   );
 
 
 
 
   static ThemeData darkTheme = ThemeData(
-    appBarTheme: AppBarTheme(
-      actionsIconTheme: const IconThemeData(color: colorpallete.darkblue),
-      iconTheme: const IconThemeData(color: colorpallete.darkblue),
+    appBarTheme: const AppBarTheme(
+      actionsIconTheme: IconThemeData(color: colorpallete.darkblue),
+      iconTheme: IconThemeData(color: colorpallete.darkblue),
         color: colorpallete.darkTHEMR,
         centerTitle: true),
     scaffoldBackgroundColor: colorpallete.darkTHEMR,

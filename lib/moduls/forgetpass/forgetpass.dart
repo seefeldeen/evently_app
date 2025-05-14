@@ -37,13 +37,13 @@ class forgetpass extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(),
+                  const SizedBox(),
                   Image.asset(Appassets.change_setting),
-                  SizedBox(),
+                  const SizedBox(),
                   CustomTextField(
                     controller: Providerkind.emailController,
                     hintText: context.tr.email,
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return context.tr.emailCantBeEmpty;
@@ -62,7 +62,7 @@ class forgetpass extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorpallete.darkblue,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
                       ),

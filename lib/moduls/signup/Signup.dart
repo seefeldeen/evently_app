@@ -1,18 +1,12 @@
 import 'package:events/core/extensions/validation.dart';
 import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/manager/auth_provider.dart';
-import 'package:events/core/utill/Firebasefunctions/firebase_Auth.dart';
-import 'package:events/core/utill/Firebasefunctions/firebasefunctions.dart';
 import 'package:events/core/widgets/Customtextshape.dart';
-import 'package:events/moduls/signin/Signin.dart';
 import 'package:flutter/material.dart';
 import 'package:events/core/constants/App_assets/Appassets.dart';
 import 'package:events/core/extensions/PaddingExtention.dart';
-import 'package:events/core/extensions/SizeExtention.dart';
-import 'package:events/core/routes/route_names.dart';
 import 'package:events/core/widgets/Customformfield.dart';
 import 'package:events/main.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -61,10 +55,11 @@ class Signup extends StatelessWidget {
                              if (value == null || value.trim().isEmpty) {
                                return context.tr.nameCantBeEmpty;
                              }
+                             return null;
                            },
                            controller:Providerkind.nameController ,
                            hintText: context.tr.name,
-                           prefixIcon: Icon(Icons.person)
+                           prefixIcon: const Icon(Icons.person)
                        ).Setpadding(12),
                        CustomTextField(
                            validator: ( value) {
@@ -78,7 +73,7 @@ class Signup extends StatelessWidget {
                            },
                            controller: Providerkind.emailController,
                            hintText: context.tr.email,
-                           prefixIcon: Icon(Icons.email)
+                           prefixIcon: const Icon(Icons.email)
                        ).Setoptionalpadding(context, 0, 12, 12, 12),
                        CustomTextField(
                          validator: (String? value) {
@@ -92,7 +87,7 @@ class Signup extends StatelessWidget {
                          },
                          controller: Providerkind.passwordController,
                          hintText: context.tr.password,
-                         prefixIcon: Icon(Icons.lock),
+                         prefixIcon: const Icon(Icons.lock),
                          isPassword: true,
                        ).Setoptionalpadding(context, 0, 12, 12, 12),
                        CustomTextField(
@@ -100,9 +95,10 @@ class Signup extends StatelessWidget {
                          validator: (String? value) {
                            if (value != Providerkind.rePasswordController.text ) {
                              return context.tr.passwordNotMatch;
-                           }},
+                           }
+                           return null;},
                          hintText: context.tr.rePassword,
-                         prefixIcon: Icon(Icons.lock),
+                         prefixIcon: const Icon(Icons.lock),
                          isPassword: true,
                        ).Setoptionalpadding(context, 0, 12, 12, 12),
                        ElevatedButton(
@@ -114,14 +110,16 @@ class Signup extends StatelessWidget {
                              Providerkind.createaccount();
 
                            }
-                           else    EasyLoading.show(status: context.tr.anErrorOccurred); // Show loading indicator
+                           else {
+                             EasyLoading.show(status: context.tr.anErrorOccurred); // Show loading indicator
+                           }
 
                          },
 
 
                          style: ElevatedButton.styleFrom(
                            backgroundColor: colorpallete.darkblue,
-                           padding: EdgeInsets.all(16),
+                           padding: const EdgeInsets.all(16),
                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                          ),
                          child: Text(
@@ -143,7 +141,7 @@ class Signup extends StatelessWidget {
                                  text: context.tr.alreadyHaveAccount,
                                  style:
                                  Theme.of(context).textTheme.titleMedium?.copyWith(
-                                   color: Colors.black,
+                                   color: Colors.grey,
                                    fontWeight: FontWeight.bold,
                                    fontFamily: "Inter",
                                  ),
@@ -156,7 +154,7 @@ class Signup extends StatelessWidget {
                                      padding:
                                      EdgeInsets.zero, // Removes default padding
                                      minimumSize:
-                                     Size(0, 0), // Ensures no extra height/width
+                                     const Size(0, 0), // Ensures no extra height/width
                                      tapTargetSize: MaterialTapTargetSize
                                          .shrinkWrap, // Shrinks tap area
                                    ),
@@ -164,8 +162,7 @@ class Signup extends StatelessWidget {
                                      navigatorkey.currentState!
                                          .pushNamed("/sign_in");
                                    },
-                                   child: Text(" "+
-                                       context.tr.login,
+                                   child: Text(" ${context.tr.login}",
                                      style: Theme.of(context)
                                          .textTheme
                                          .titleMedium

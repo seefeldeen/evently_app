@@ -56,6 +56,10 @@ dependencies:
   intl: any
   shared_preferences: ^2.5.3
   dropdown_button2: ^2.3.9
+  google_maps_flutter: ^2.10.1
+  firebase_messaging: ^15.2.5
+  google_sign_in: ^6.2.2
+  geocode: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +76,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+  firebase_data_connect: any
 flutter:
   generate: true
 

@@ -1,4 +1,3 @@
-import 'package:events/core/ColorPallete/colorpallete.dart';
 import 'package:flutter/material.dart';
 
 class Cutomelevatedbutton extends StatelessWidget {
@@ -9,7 +8,7 @@ class Cutomelevatedbutton extends StatelessWidget {
 
   final double buttonradius;
 
-  Cutomelevatedbutton(
+  const Cutomelevatedbutton(
       {super.key,
       required this.text,
       required this.onPressed,
@@ -22,7 +21,7 @@ class Cutomelevatedbutton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 6,vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 6,vertical: 12),
           backgroundColor: buttoncolor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(buttonradius)),

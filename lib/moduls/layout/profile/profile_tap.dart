@@ -36,19 +36,19 @@ class ProfileTab extends StatelessWidget {
                 ),
                 Positioned(
                   top: 40,
-                  right: .45.w,
+                  right: .15.w,
                   child: Customtextshape.Getbigtext(
                     username ?? "User",
                     context,
                   ),
-                ),
+                ).Setresponsivepadding(context, .05, 0, .02, .4),
                 Positioned(
                   bottom: 40,
-                  left: .4.w,
+                  left: .38.w,
                   child: Customtextshape.Getsmalltext(
                     userEmail,
                     context,
-                  ),
+                  ).Setresponsivepadding(context, .01, .01, .1.w, .0),
                 ),
               ],
             ),
@@ -189,7 +189,7 @@ class ProfileTab extends StatelessWidget {
               )), // النص
             ).Setresponsivepadding(
                 enablemediaquery: true, context,
-                .3, 0, .1, .1),
+                .28, 0, .1, .1),
           ],
         ),
       ),

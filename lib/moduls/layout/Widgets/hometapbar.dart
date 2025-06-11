@@ -61,9 +61,13 @@ class hometapbar extends StatelessWidget {
             color: getTextAndIconColor(),
             size: 25,
           ).Setoptionalpadding(context, 0, 0, 4, 2),
-          Text(
-            text,
-            style: TextStyle(color: getTextAndIconColor()),
+          Flexible(
+            child: Text(
+              text,
+              style: TextStyle(color: getTextAndIconColor(),
+             ),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

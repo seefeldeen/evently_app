@@ -37,40 +37,74 @@ notifyListeners();
   }
 
   Future<bool> addEvent(BuildContext context) async {
-
-    EasyLoading.show(status: context.tr.loading); // نص زي "جاري التحميل..."
+    EasyLoading.show(status: context.tr.loading);
 
     try {
-if (eventlocation == null) {
-  snackbar.showCustomNotification(
-    message: context.tr.pleasechooselocation,
+      // تحقق من الموقع
+      if (eventlocation == null) {
+        EasyLoading.dismiss();
+        snackbar.showCustomNotification(
+          message: context.tr.pleasechooselocation,
+        );
+        return false;
+      }
 
-  );
-  return false ;
-}
-   await FirebaseFunctions.addEvent(EventModel(
-        title: titleController.text,
-        desc: descriptionController.text,
-        eventDate: selectedDate?.toIso8601String() ?? "",
-        eventTime: selectedTime?.format(context) ?? "",
+      // التحقق من التاريخ والوقت
+      if (selectedDate == null || selectedTime == null) {
+        EasyLoading.dismiss();
+        snackbar.showCustomNotification(
+          message: context.tr.chooseDate, // ترجمها في ملف اللغات
+        );
+        return false;
+      }
+
+      // التحقق من العنوان والوصف
+      if (titleController.text.trim().isEmpty || descriptionController.text.trim().isEmpty) {
+        EasyLoading.dismiss();
+        snackbar.showCustomNotification(
+          message: " please fill all fields", // ترجمها في ملف اللغات
+        );
+        return false;
+      }
+
+
+      // إنشاء الحدث
+      final event = EventModel(
+        title: titleController.text.trim(),
+        desc: descriptionController.text.trim(),
+        eventDate: selectedDate!.toIso8601String(),
+        eventTime: selectedTime!.format(context),
         categoryId: Eventcategory.creationcategories[selectedTap].categorynam ?? "",
         categoryImage: Eventcategory.creationcategories[selectedTap].categoryimg ?? "",
-        longitude: eventlocation?.longitude??0,
-        latitude: eventlocation?.latitude??0
-      ));
-      EasyLoading.dismiss();
-      snackbar.showCustomNotification(
-          message: context.tr.eventWasCreatedSuccessfully,
-
+        longitude: eventlocation!.longitude,
+        latitude: eventlocation!.latitude,
       );
-      navigatorkey.currentState?.pop();
+
+      await FirebaseFunctions.addEvent(event);
+
+      // إخفاء اللودينج
+      await EasyLoading.dismiss();
+
+      // إشعار بالنجاح
+      snackbar.showCustomNotification(
+        message: context.tr.eventWasCreatedSuccessfully,
+      );
+
+      // تأخير بسيط قبل الإغلاق لضمان عرض الإشعار
+      Future.delayed(const Duration(milliseconds: 100), () {
+        navigatorkey.currentState?.pop();
+      });
+
       return true;
 
     } catch (e) {
-      EasyLoading.dismiss();
+      await EasyLoading.dismiss();
+      print("❌ Error in addEvent: $e");
+
       snackbar.showCustomErrormessage(
         message: context.tr.failedToCreateEvent,
       );
+
       return false;
     }
   }
@@ -215,6 +249,7 @@ if (eventlocation == null) {
     selectedTime = TimeOfDay.fromDateTime(dt);
     eventlocation = LatLng(event.latitude, event.longitude);
   }
+
   Future<bool> editEvent(BuildContext context) async {
 
     EasyLoading.show(status: context.tr.loading); // نص زي "جاري التحميل..."

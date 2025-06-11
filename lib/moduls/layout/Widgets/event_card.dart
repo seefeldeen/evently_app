@@ -62,7 +62,7 @@ class _EventCardState extends State<EventCard> {
             children: [
               Container(
                 alignment: Alignment.centerLeft,
-                width: .25.w,
+                width: .27.w,
                 height: .06.h,
                 decoration: BoxDecoration(
                   color: colorpallete.parimary,
@@ -74,28 +74,32 @@ class _EventCardState extends State<EventCard> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(formattedTime,
-                          style: const TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ).Setoptionalpadding(context, 2, 0, 0, 4),
-                    Text(
-                      formattedDate,
-                          style: const TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ).Setoptionalpadding(context, 2, 0, 0, 4),
+                        Flexible(
+                          child: Text(formattedTime,
+                            style: const TextStyle(
+                              color: Colors.indigo,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ).Setoptionalpadding(context, 2, 0, 0, 4),
+                        ),
+                    Flexible(
+                      child: Text(
+                        formattedDate,
+                            style: const TextStyle(
+                              color: Colors.indigo,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ).Setoptionalpadding(context, 2, 0, 0, 4),
+                    ),
                       ],
                     ),
                   ],
                 ),
               ).Setoptionalpadding(context, 4, 0, 4, 8),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(8),
                 width: .9.w,
                 height: .06.h,
                 decoration: BoxDecoration(
@@ -125,7 +129,7 @@ class _EventCardState extends State<EventCard> {
                     ),
                   ],
                 ),
-              ).Setoptionalpadding(context, .092.h, .01.h, 0, 0),
+              ).Setoptionalpadding(context, .09.h, .00.h, 0, 0),
             ],
           ),
                ).Sethorizontalpadding(context, .002),

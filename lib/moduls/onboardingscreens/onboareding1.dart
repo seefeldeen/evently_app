@@ -59,7 +59,7 @@ class _OnboardingState extends State<onboarding> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(Appassets.evently),
+                Image.asset(Appassets.evently,width : 250),
               ],
             ),
           ),

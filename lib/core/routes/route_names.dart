@@ -10,6 +10,7 @@ class route_names
       static const String forgetpass = "forgetpass";
       static const String welcome = "/welcome_Screen";
       static const String layout = "layout";
+      static const String home = "home";
       static const String eventcreation = "/createevent";
       static const String picklocation = "/pick_location";
       static const String eventdetails = "/event_details";

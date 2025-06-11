@@ -11,6 +11,7 @@ class Customtextshape {
        .textTheme
        .titleMedium
        ?.copyWith(
+     overflow: TextOverflow.ellipsis,
      fontSize: 18,
      decorationThickness: 2,
      decorationColor: colorpallete.parimary,

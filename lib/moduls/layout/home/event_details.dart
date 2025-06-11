@@ -50,8 +50,10 @@ class event_details extends StatelessWidget {
                 FirebaseFunctions.deleteEvent(event).then((value) {
                   EasyLoading.show
                       (status: context.tr.eventdeleted);
+                  EasyLoading.dismiss(animation: true);
                   navigatorkey.currentState!.pop();
                 }).catchError((error) {
+                  EasyLoading.dismiss(animation: true);
                   EasyLoading.showError(context.tr.somethingWentWrong);
                 });
                 // Handle favorite button press

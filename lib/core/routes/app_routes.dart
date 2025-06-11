@@ -13,6 +13,8 @@ import 'package:events/moduls/signup/Signup.dart';
 import 'package:events/moduls/splash/splashscreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../moduls/layout/home/home_tap.dart';
+
 abstract class AppRoutes{
 
 
@@ -54,6 +56,12 @@ abstract class AppRoutes{
       case route_names.welcome :
 
         return MaterialPageRoute(builder: (context)=> const welcomescreen(),
+            settings:  settings
+
+        );
+        case route_names.home :
+
+        return MaterialPageRoute(builder: (context)=>  HomeTap(),
             settings:  settings
 
         );

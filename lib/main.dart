@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/routes/app_routes.dart';
 import 'package:events/core/theme/AppThemeManager.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'core/manager/auth_provider.dart';
 import 'firebase_options.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:events/core/services/loadingservices.dart';
@@ -15,10 +17,11 @@ var navigatorkey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseFirestore.instance.disableNetwork();
 
   configLoading(); // إعدادات التحميل
 
@@ -27,8 +30,11 @@ void main() async {
   await appProvider.getTheme();
 
   runApp(
-    ChangeNotifierProvider.value(
-      value: appProvider,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: appProvider),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
       child: const MyApp(),
     ),
   );

@@ -32,9 +32,11 @@ class Eventtypetab extends StatelessWidget {
             color: isselected? colorpallete.darkblue : colorpallete.parimary, // Corrected the typo here
             size: 25,
           ).Setoptionalpadding(context, 0, 0, 4, 2),
-          Text(
-            text,
-            style: TextStyle(color: isselected? colorpallete.darkblue : colorpallete.parimary),
+          Flexible(
+            child: Text(
+              text,
+              style: TextStyle(color: isselected? colorpallete.darkblue : colorpallete.parimary),
+             overflow: TextOverflow.ellipsis ,),
           ),
         ],
       ),

@@ -11,6 +11,7 @@ import 'package:events/core/widgets/EventTypeTab.dart';
 import 'package:events/main.dart';
 import 'package:events/moduls/createevent/creatingProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -223,16 +224,17 @@ eventprovider.initializedata(widget.event!); }
                         ElevatedButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              if (createprovider.selectedDate != null
-                                &&createprovider.eventModel == null) {
+                              if (
+                                createprovider.eventModel == null) {
                                 createprovider.addEvent(context);
                               } else
-                              if (createprovider.selectedDate != null &&
+                              if (
                                   createprovider.eventModel != null) {
                                 createprovider.editEvent(context);
+                                EasyLoading.dismiss();
                                 navigatorkey.currentState!.popUntil(
                                     (route) => route.settings.name ==
-                                        route_names.layout);
+                                        route_names.home);
 
 
                               }

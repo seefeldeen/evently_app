@@ -174,7 +174,7 @@ class ProfileTab extends StatelessWidget {
               onPressed: () {
                 EasyLoading.show();
                 firebase_auth.logout();
-                navigatorkey.currentState!.pushNamedAndRemoveUntil(
+                navigatorKey.currentState!.pushNamedAndRemoveUntil(
                 route_names.Sign_in,
                   (route) => false,
                 );

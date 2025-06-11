@@ -22,7 +22,7 @@ class firebase_auth {
        await credential.user!.updateProfile(
           displayName: name
         );
-        navigatorkey.currentState!.pushNamedAndRemoveUntil(
+        navigatorKey.currentState!.pushNamedAndRemoveUntil(
             route_names.layout,
                 (route) => false);
       }
@@ -73,7 +73,7 @@ class firebase_auth {
         password: password,
       );
       snackbar.showCustomNotification(message: 'Login successfully');
-      navigatorkey.currentState!.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
         route_names.layout,
             (route) => false,
       );      return credential;

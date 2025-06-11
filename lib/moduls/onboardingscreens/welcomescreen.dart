@@ -128,7 +128,7 @@ class welcomescreen extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   provider.Firsttimesetter();
-                  navigatorkey.currentState!.pushNamed(route_names.onboarding);
+                  navigatorKey.currentState!.pushNamed(route_names.onboarding);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorpallete.darkblue,

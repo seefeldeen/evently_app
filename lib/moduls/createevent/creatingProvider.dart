@@ -13,6 +13,7 @@ class CreatingProvider extends ChangeNotifier {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+  var navigatorKey = GlobalKey<NavigatorState>();
   EventModel? eventModel;
   TimeOfDay? selectedTime;
   DateTime? selectedDate;
@@ -37,38 +38,10 @@ notifyListeners();
   }
 
   Future<bool> addEvent(BuildContext context) async {
-    EasyLoading.show(status: context.tr.loading);
 
+    snackbar.newloading();
     try {
-      // تحقق من الموقع
-      if (eventlocation == null) {
-        EasyLoading.dismiss();
-        snackbar.showCustomNotification(
-          message: context.tr.pleasechooselocation,
-        );
-        return false;
-      }
 
-      // التحقق من التاريخ والوقت
-      if (selectedDate == null || selectedTime == null) {
-        EasyLoading.dismiss();
-        snackbar.showCustomNotification(
-          message: context.tr.chooseDate, // ترجمها في ملف اللغات
-        );
-        return false;
-      }
-
-      // التحقق من العنوان والوصف
-      if (titleController.text.trim().isEmpty || descriptionController.text.trim().isEmpty) {
-        EasyLoading.dismiss();
-        snackbar.showCustomNotification(
-          message: " please fill all fields", // ترجمها في ملف اللغات
-        );
-        return false;
-      }
-
-
-      // إنشاء الحدث
       final event = EventModel(
         title: titleController.text.trim(),
         desc: descriptionController.text.trim(),
@@ -82,29 +55,16 @@ notifyListeners();
 
       await FirebaseFunctions.addEvent(event);
 
-      // إخفاء اللودينج
-      await EasyLoading.dismiss();
 
-      // إشعار بالنجاح
       snackbar.showCustomNotification(
         message: context.tr.eventWasCreatedSuccessfully,
       );
 
-      // تأخير بسيط قبل الإغلاق لضمان عرض الإشعار
-      Future.delayed(const Duration(milliseconds: 100), () {
-        navigatorkey.currentState?.pop();
-      });
-
       return true;
-
     } catch (e) {
-      await EasyLoading.dismiss();
+      snackbar.dismissloading();
       print("❌ Error in addEvent: $e");
-
-      snackbar.showCustomErrormessage(
-        message: context.tr.failedToCreateEvent,
-      );
-
+      snackbar.showCustomErrormessage(message: context.tr.failedToCreateEvent);
       return false;
     }
   }
@@ -280,7 +240,7 @@ notifyListeners();
         message: context.tr.eventWasCreatedSuccessfully,
 
       );
-      navigatorkey.currentState?.pop();
+      navigatorKey.currentState?.pop();
       return true;
 
     } catch (e) {

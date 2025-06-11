@@ -26,13 +26,13 @@ class _SplashScreenState extends State<SplashScreen> {
       final currentUser = FirebaseAuth.instance.currentUser;
 
       if (isFirstTime) {
-        navigatorkey.currentState!.pushReplacementNamed(route_names.welcome);
+        navigatorKey.currentState!.pushReplacementNamed(route_names.welcome);
       } else {
         if (currentUser == null) {
-          navigatorkey.currentState!
+          navigatorKey.currentState!
               .pushReplacementNamed(route_names.Sign_in);
         } else {
-          navigatorkey.currentState!.pushReplacementNamed(route_names.layout);
+          navigatorKey.currentState!.pushReplacementNamed(route_names.layout);
         }
       }
     });

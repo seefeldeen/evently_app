@@ -68,7 +68,26 @@ static void showCustomErrormessage({
     );
   }
 
+static void newloading (){
+  BotToast.showLoading(
+    clickClose: true,
+    allowClick: true,
+    crossPage: true,
+    backgroundColor: Colors.black45,
+    backButtonBehavior: BackButtonBehavior.close,
+  );
+  BotToast.showText(
+    text: "Loading...",
+    textStyle: const TextStyle(color: Colors.white),
+    contentColor: Colors.black87,
+    duration: const Duration(seconds: 3),
+  );
 
 
+}
+
+static void dismissloading() {
+    BotToast.closeAllLoading();
+  }
 
 }

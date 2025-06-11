@@ -33,7 +33,7 @@ class event_details extends StatelessWidget {
                 size: 26,
               ),
               onPressed: () {
-                navigatorkey.currentState!.pushNamed(
+                navigatorKey.currentState!.pushNamed(
                   route_names.eventcreation,
                   arguments: event,
                 );
@@ -47,15 +47,12 @@ class event_details extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
-                FirebaseFunctions.deleteEvent(event).then((value) {
-                  EasyLoading.show
-                      (status: context.tr.eventdeleted);
-                  EasyLoading.dismiss(animation: true);
-                  navigatorkey.currentState!.pop();
-                }).catchError((error) {
-                  EasyLoading.dismiss(animation: true);
-                  EasyLoading.showError(context.tr.somethingWentWrong);
-                });
+
+                EasyLoading.show
+                  (status: context.tr.eventdeleted);
+                FirebaseFunctions.deleteEvent(event);
+                  EasyLoading.dismiss();
+                navigatorKey.currentState!.pop();
                 // Handle favorite button press
               },
             ),

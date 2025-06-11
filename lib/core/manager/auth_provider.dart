@@ -38,7 +38,7 @@ class AuthProvider extends ChangeNotifier{
     user = await firebase_auth.signInWithGoogle();
     if (user?.user?.uid != null) {
       EasyLoading.dismiss();
-      navigatorkey.currentState!.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
         route_names.layout,
             (route) => false,
       );

@@ -26,7 +26,7 @@ class _pick_locationState extends State<pick_location> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           provider.getlocation();
-          navigatorkey.currentState!.pop();
+          navigatorKey.currentState!.pop();
         },
         backgroundColor: colorpallete.darkblue,
         foregroundColor: colorpallete.parimary,
@@ -39,7 +39,7 @@ class _pick_locationState extends State<pick_location> {
             child: GoogleMap(
               onTap: (LatLng location) {
                 provider.changeeventlocation(location); // ✅ نفس instance
-                navigatorkey.currentState!.pop();
+                navigatorKey.currentState!.pop();
               },
               initialCameraPosition: provider.cameraPosition,
               onMapCreated: (controller) {

@@ -153,7 +153,7 @@ class Signup extends StatelessWidget {
                                           .shrinkWrap, // Shrinks tap area
                                     ),
                                     onPressed: () {
-                                      navigatorkey.currentState!
+                                      navigatorKey.currentState!
                                           .pushNamed("/sign_in");
                                     },
                                     child: Text(" ${context.tr.login}",

@@ -35,7 +35,7 @@ class _EventCardState extends State<EventCard> {
     return  // Apply border radius to ClipRRect to ensure clipping
        InkWell(
          onTap: () {
-           navigatorkey.currentState!.pushNamed( '/event_details',
+           navigatorKey.currentState!.pushNamed( '/event_details',
            arguments: widget.eventddatamodel);
            EasyLoading.dismiss(
              animation: true,

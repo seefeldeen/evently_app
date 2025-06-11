@@ -13,7 +13,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:events/core/services/loadingservices.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-var navigatorkey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,9 +48,13 @@ class MyApp extends StatelessWidget {
     final provider = Provider.of<app_provider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      builder: EasyLoading.init(
-        builder: (BotToastInit()),
-      ), // << مهم جدا
+      builder: (context, child) {
+        child = BotToastInit()(context, child);
+        child = EasyLoading.init()(context, child);
+
+        return child;
+      },
+      navigatorObservers: [BotToastNavigatorObserver()],
       title: 'Localizations Sample App',
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
         Locale('ar'), // العربية
       ],
       locale: Locale(provider.lang),
-      navigatorKey: navigatorkey,
+      navigatorKey: navigatorKey,
       theme: AppThemeManager.lightTheme,
       themeMode: provider.currenttheme,
       darkTheme: AppThemeManager.darkTheme,

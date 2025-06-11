@@ -27,7 +27,7 @@ class layout extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add, color: colorpallete.parimary),
           onPressed: () {
-            navigatorkey.currentState!.pushNamed(route_names.eventcreation);
+            navigatorKey.currentState!.pushNamed(route_names.eventcreation);
           },
         ),
         bottomNavigationBar: BottomNavigationBar(

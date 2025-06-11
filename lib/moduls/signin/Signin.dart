@@ -89,7 +89,7 @@ class Signin extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              navigatorkey.currentState!.pushNamed(route_names.forgetpass);
+                              navigatorKey.currentState!.pushNamed(route_names.forgetpass);
                             },
                             child: Text(
                               context.tr.forgotPassword,
@@ -118,7 +118,7 @@ class Signin extends StatelessWidget {
                                   // تخزين اسم المستخدم في الـ Provider بعد النجاح
 
                                   // بعد تخزين الاسم، انتقل إلى الشاشة التالية
-                                  navigatorkey.currentState!.pushReplacementNamed(route_names.layout);
+                                  navigatorKey.currentState!.pushReplacementNamed(route_names.layout);
                                 } else {
                                   EasyLoading.showError(context.tr.loginFailedPleaseTryAgain);
                                 }
@@ -153,7 +153,7 @@ class Signin extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyMedium,),
                             TextButton(
                               onPressed: () {
-                                navigatorkey.currentState!.pushNamed(route_names.Sign_up);
+                                navigatorKey.currentState!.pushNamed(route_names.Sign_up);
                               },
                               child: Text(
                                 context.tr.createAccount,

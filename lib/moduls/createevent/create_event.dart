@@ -5,6 +5,7 @@ import 'package:events/core/manager/app_provider.dart';
 import 'package:events/core/models/Eventcategory.dart';
 import 'package:events/core/models/Eventdata.dart';
 import 'package:events/core/routes/route_names.dart';
+import 'package:events/core/services/snackbarservice.dart';
 import 'package:events/core/widgets/Customformfield.dart';
 import 'package:events/core/widgets/Customtextshape.dart';
 import 'package:events/core/widgets/EventTypeTab.dart';
@@ -183,7 +184,7 @@ eventprovider.initializedata(widget.event!); }
                             context, .009.h, .009.h, .03.w, .03.w),
                         ElevatedButton(
                           onPressed: () {
-                            navigatorkey.currentState!
+                            navigatorKey.currentState!
                                 .pushNamed(route_names.picklocation,
                                 arguments: createprovider);
                           },
@@ -222,20 +223,23 @@ eventprovider.initializedata(widget.event!); }
                           ),
                         ).Setoptionalpadding(context, 12, 2, 12, 12),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               if (
                                 createprovider.eventModel == null) {
-                                createprovider.addEvent(context);
+                                snackbar.newloading();
+                                 await createprovider.addEvent(context);
+                                EasyLoading.dismiss();
+                                navigatorKey.currentState?.pop();
+                                snackbar.showCustomNotification(
+                                  message: context.tr.eventWasCreatedSuccessfully,
+                                );
+
+
                               } else
                               if (
                                   createprovider.eventModel != null) {
-                                createprovider.editEvent(context);
-                                EasyLoading.dismiss();
-                                navigatorkey.currentState!.popUntil(
-                                    (route) => route.settings.name ==
-                                        route_names.home);
-
+                                await createprovider.editEvent(context);
 
                               }
                             }

@@ -1,0 +1,2 @@
+C:/Users/LENOVO/StudioProjects/events/android/app/.cxx/Debug/3zg59325/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/LENOVO/StudioProjects/events/android/app/.cxx/Debug/3zg59325/armeabi-v7a/CMakeFiles/rebuild_cache.dir
